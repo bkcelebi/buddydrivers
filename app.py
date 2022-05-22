@@ -183,41 +183,29 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/ads', methods=['GET'])
+@app.route('/drivers', methods=['GET'])
 # @login_required
-def ads():
-    buttonValue = ""
-    #if filter true
-    if request.args.get('filter'):
-        #asc
-        if request.args.get('filter') == 'Asc':
-            
-            buttonValue = "Ascending"    
-            posts = Post.query.order_by(Post.date_created.asc()).all() 
-            
-            return render_template(
-                'ads.html', 
-                posts=posts,
-                buttonValue=buttonValue)
-        #desc
-        elif request.args.get('filter') == 'Desc':
-            
-            buttonValue = "Descending"
-            posts = Post.query.order_by(Post.date_created.desc()).all() 
-            
-            return render_template(
-                'ads.html', 
-                posts=posts,
-                buttonValue=buttonValue)
+def drivers():
+   
+    page = request.args.get('page',1 , type=int)
+    posts = Post.query.order_by(Post.date_created.desc()). \
+    paginate(page=page, per_page=15) 
+    
+    return render_template(
+        'drivers.html',
+        posts=posts)
 
-    else:
-
-        posts = Post.query.order_by(Post.date_created).all() 
-        
-        return render_template(
-            'ads.html', 
-            posts=posts,
-            buttonValue=buttonValue)
+@app.route('/learners', methods=['GET'])
+# @login_required
+def learners():
+   
+    page = request.args.get('page',1 , type=int)
+    posts = Post.query.order_by(Post.date_created.desc()). \
+    paginate(page=page, per_page=15)  
+    
+    return render_template(
+        'learners.html',
+        posts=posts)
 
 
 @app.route('/search', methods=['GET'])
@@ -254,7 +242,7 @@ def profile():
             db.session.add(new_post)
             db.session.commit()
             flash("Task created successfully", category='success')
-            return redirect('ads')
+            return redirect('drivers')
         
         return redirect(url_for('profile'))
 
