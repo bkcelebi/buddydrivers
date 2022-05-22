@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {% if current_user.is_authenticated %}
+        <title>{{current_user.first_name}}'s Profile</title>
+    {% else %}
+        <title>Profile</title>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    {% if current_user.is_authenticated %}
+    <br>
+    <div class="container">
+        <h3 align="center">My Tasks</h3><br>
+        <!--  Table design reference https://www.youtube.com/watch?v=Z1RJmh_OqeA -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Tasks</th>
+                    <th scope="col">Date created</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            {% for post in user.posts %}
+                <tbody>
+                    <tr>
+                        <td scope="row">{{ post.content }}</td>
+                        <td scope="row">{{ post.date_created.date() }}</td>
+                        <td scope="row">
+                            <a href="/delete/{{post.id}}">Delete</a><br>
+                            <a href="/update/{{post.id}}">Update</a>
+                        </td>
+                    </tr>
+                </tbody>
+            {% endfor %}          
+        </table>
+
+        <button 
+        class="btn btn-outline-dark" 
+        type="button" onclick="document.getElementById('create-post').style.display = ''"
+        >
+        Create New Task
+    </button>
+    </div><br><br>
+
+
+    <div id="create-post" style="display: none;">
+        <div class="d-flex justify-content-md-center align-items-center">
+            <form action="/profile" method="POST">
+                <label style="margin-bottom: 5%; margin-left: 37%; font-weight: bold;" for="content"><important>Create task</important></label><br>
+                <textarea id="content" name="content" rows="5" cols="50"></textarea><br>
+                <input class="btn btn-outline-success" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>      
+
+    {% else %}
+        
+        <div class="container">
+            <h4 align="center" style="margin-top: 3%;">Trying to access your profile? Sign in now!</h4><br>
+            <div style="margin-top: 5%;" class="d-flex justify-content-center align-items-center">
+                <div class="card" style="width: 20rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">Sign In</h5>
+                      <form action="/login" method="POST">
+                            <div class="form-group">
+                            <label for="mail">Email</label>
+                            <input class="form-control" type="email" id="mail" name="mail">
+                            </div>
+                            <div class="form-group">
+                            <label for="pwd">Password</label>
+                            <input class="form-control" type="password" id="pwd" name="pwd">
+                            </div>
+                            <input class="btn btn-outline-dark" type="submit" value="Sign In">
+                    </form>
+                    </div>
+                </div>
+            </div>
+    {% endif %}
+{% endblock %}

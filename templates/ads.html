@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Tasks</title>
+{% endblock %}
+
+{% block body %}
+
+    {% if current_user.is_authenticated %}
+    <br>
+        <h1 align="center">Tasks</h1>
+    <br>
+        {% if posts|length < 1 %}
+            <div class="container">
+                <h5 style="margin-top: 5%;" align="center">There are no tasks yet. <a href="{{url_for('profile')}}">Create now</a></h5>     
+            </div>
+            
+        {% else %}
+            <div class="container">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="padding-bottom: 2.5%;" scope="col">Author</th>
+                            <th style="padding-bottom: 2.5%;" scope="col">Task</th>
+                            <th scope="col">
+                                <span style="margin-left: 5%;">Date created</span> 
+                                <form action="/ads" class="form-inline">                  
+                                    <select style="height: 31px; margin-right: 1%;" name="filter" id="filter">
+                                        {% if buttonValue ==  "Ascending" %}
+                                            <option value="Asc">{{buttonValue}}</option>
+                                            <option value="Desc">Descending</option>
+                                        {% elif buttonValue ==  "Descending" %}
+                                            <option value="Desc">{{buttonValue}}</option>
+                                            <option value="Asc">Ascending</option>
+                                        {% else %}
+                                            <option value="Asc">Ascending</option>
+                                            <option value="Desc">Descending</option>
+                                        {% endif %}   
+                                    </select>
+                                    <input 
+                                        class="btn btn-sm btn-outline-dark" 
+                                        type="submit" 
+                                        value="Filter"> 
+                                </form>                          
+                            </th>
+                        </tr>
+                    </thead>
+                    {% for post in posts %}
+                        <tbody>
+                            <tr>
+                                <td scope="row">{{ post.user.first_name }}</td>
+                                <td scope="row">{{ post.content }}</td>
+                                <td scope="row">{{ post.date_created.date() }}</td>                  
+                            </tr>
+                        </tbody>
+                    {% endfor %}          
+                </table>
+
+                <a class="btn btn-outline-dark" href="{{url_for('profile')}}">Create a post</a>
+
+            </div>
+            
+        {% endif %}
+        
+
+        
+    {% else %}
+        <br>
+            <h1 align="center">Tasks</h1>
+        <br>
+        {% if posts|length < 1 %}
+            <div class="container">
+                <h5 style="margin-top: 5%;" align="center">There are no tasks yet. <a href="{{url_for('profile')}}">Create now</a></h5>     
+            </div>
+            
+        {% else %}
+            <div class="container">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="padding-bottom: 2.5%;" scope="col">Author</th>
+                            <th style="padding-bottom: 2.5%;" scope="col">Task</th>
+                            <th scope="col">
+                                <span style="margin-left: 5%;">Date created</span> 
+                                <form action="/ads" class="form-inline">                  
+                                    <select style="height: 31px; margin-right: 1%;" name="filter" id="filter">
+                                        {% if buttonValue ==  "Ascending" %}
+                                            <option value="Asc">{{buttonValue}}</option>
+                                            <option value="Desc">Descending</option>
+                                        {% elif buttonValue ==  "Descending" %}
+                                            <option value="Desc">{{buttonValue}}</option>
+                                            <option value="Asc">Ascending</option>
+                                        {% else %}
+                                            <option value="Asc">Ascending</option>
+                                            <option value="Desc">Descending</option>
+                                        {% endif %}   
+                                    </select>
+                                    <input 
+                                        class="btn btn-sm btn-outline-dark" 
+                                        type="submit" 
+                                        value="Filter"> 
+                                </form>                         
+                            </th>
+                        </tr>
+
+                    </thead>
+
+                    {% for post in posts %}
+                        <tbody>
+                            <tr>
+                                <td scope="row">{{ post.user.first_name }}</td>
+                                <td scope="row">{{ post.content }}</td>
+                                <td scope="row">{{ post.date_created.date() }}</td>                  
+                            </tr>
+                        </tbody>
+                    {% endfor %}          
+                </table>
+            </div>
+        {% endif %}
+    {% endif %}
+    
+{% endblock %}

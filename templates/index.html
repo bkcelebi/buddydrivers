@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Home</title>
+{% endblock %}
+
+{% block body %}
+
+
+
+    {% if current_user.is_authenticated %}
+        <!-- style part is from https://stackoverflow.com/questions/65352606/background-image-in-bootstrap-css-does-not-cover-full-screen -->
+        <div 
+        style=" 
+        margin-top: -4%;
+        background: url('https://images.pexels.com/photos/4359106/pexels-photo-4359106.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260');
+        position: center;
+        background-size: cover;
+        height: 100vh;
+        width: 100%;">
+            <div style="margin-left: 15%; margin-top:10%;" class="card-img-overlay">
+                <h3 class="card-title">Welcome to TaskMate, {{current_user.first_name}}!</h3>
+                <p class="card-text"><i>See all tasks.</i></p>
+                <a class="btn btn-outline-dark" href="{{url_for('ads')}}">Search</a>
+            </div>  
+        </div>
+
+    {% else %}
+
+        <div 
+        style=" 
+        margin-top: -4%;
+        background: url('https://images.pexels.com/photos/4359106/pexels-photo-4359106.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260');
+        position: center;
+        background-size: cover;
+        height: 100vh;
+        width: 100%;">
+            <div style="margin-left: 15%; margin-top:10%;" class="card-img-overlay">
+                <h3 class="card-title">Welcome to TaskMate</h3>
+                <p class="card-text"><i>See all tasks.</i></p>
+                <a class="btn btn-outline-dark" href="{{url_for('ads')}}">Search</a>
+            </div>  
+        </div>
+
+    {% endif %}
+
+
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Sing Up</title>
+    {% if current_user.is_authenticated %}
+        <meta http-equiv="REFRESH" content="4; profile">
+    {% endif %}
+
+{% endblock %}
+
+{% block body %}
+
+    {% if current_user.is_authenticated %}
+    
+    <h3 align="center" style="margin-top: 10%;">Hi {{ current_user.first_name }}! You are being redirected to your profile!</h3>
+
+    {% else %}
+
+    <div class="container">
+        <br>
+        <h1 align="center">Welcome to TaskMate</h1>
+        <br>
+        <!-- form design is from bootstrap https://getbootstrap.com/docs/5.0/forms/overview/-->
+        <form action="/signup" method="POST">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="fname">First Name</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="fname" name="fname">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="lname">Last Name</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="lname" name="lname">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="mail">Email</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="email" id="mail" name="mail">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="pwd">Password</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="password" id="pwd" name="pwd">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="pwd2">Confirm Password</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="password" id="pwd2" name="pwd2">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="age">Age</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="number" id="age" name="age">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="gender">Gender</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="gender" name="gender">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="location">Location</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="location" name="location">
+                </div>
+            </div>
+            <input class="btn btn-outline-dark" type="submit" value="Register"></input>
+        </form>
+    </div>
+
+    <h5 align="center">Already have an account? <a href="{{url_for('login')}}"> Sign in!</a></h5>
+
+    {% endif %}
+
+{% endblock %}

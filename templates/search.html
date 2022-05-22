@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Search</title>
+{% endblock %}
+
+{% block body %}
+
+    {% if current_user.is_authenticated %}
+        <br>
+            <h1 align="center">Tasks</h1>
+        <br>
+        {% if search == "" %}
+            <h3 style="margin-top: 5%;" align="center">No result found</h3> 
+
+        {% elif result == [] %}
+            <h3 style="margin-top: 5%;" align="center">No result found for {{search}}</h3>
+            
+        {% else %}
+            <div class="container">
+                
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{url_for('ads')}}">Tasks</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{search}}</li>
+                </ol>
+                
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Author</th>
+                            <th scope="col">Task</th>
+                            <th scope="col">Date created</th>
+                        </tr>
+
+                    </thead>
+                    {% for post, user in result %}
+                        <tbody>
+                            <tr>
+                                <td scope="row">{{ user.first_name }}</td>
+                                <td scope="row">{{ post.content }}</td>
+                                <td scope="row">{{ post.date_created.date() }}</td>                  
+                            </tr>
+                        </tbody>
+                    {% endfor %}
+            
+                </table>
+            </div>
+        {% endif %}
+        
+    {% else %}
+        <br>
+            <h1 align="center">Tasks</h1>
+        <br>
+        {% if search == "" %}
+            <h3 style="margin-top: 5%;" align="center">No results found</h3> 
+        
+        {% elif result == [] %}
+            <h3 style="margin-top: 5%;" align="center">No results found for {{search}}</h3>
+            
+        {% else %}
+            <div class="container">
+
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{url_for('ads')}}">Tasks</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{search}}</li>
+                </ol>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Author</th>
+                            <th scope="col">Task</th>
+                            <th scope="col">Date created</th>
+                        </tr>
+
+                    </thead>
+                    {% for post, user in result %}
+                        <tbody>
+                            <tr>
+                                <td scope="row">{{ user.first_name }}</td>
+                                <td scope="row">{{ post.content }}</td>
+                                <td scope="row">{{ post.date_created.date() }}</td>                  
+                            </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endif %}
+    {% endif %}
+    
+{% endblock %}
