@@ -23,6 +23,12 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ post.user.first_name }}</h5>
                         <p class="card-text">{{ post.content }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                            </div>
+                            <small class="text-muted">{{post.user.location}}</small>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">{{ post.date_created.date() }}</small>

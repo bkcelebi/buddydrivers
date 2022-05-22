@@ -2,48 +2,84 @@
 
 {% block head %}
     <title>Home</title>
+    <style>
+        .bd-placeholder-img {
+          font-size: 1.125rem;
+          text-anchor: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+        }
+  
+        @media (min-width: 768px) {
+          .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+          }
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-
-
-
-    {% if current_user.is_authenticated %}
-        <!-- style part is from https://stackoverflow.com/questions/65352606/background-image-in-bootstrap-css-does-not-cover-full-screen -->
-        <div 
-        style=" 
-        margin-top: -4%;
-        background: url('https://images.pexels.com/photos/8550825/pexels-photo-8550825.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
-        position: center;
-        background-size: cover;
-        height: 100vh;
-        width: 100%;">
-            <div style="margin-left: 15%; margin-top:10%;" class="card-img-overlay">
-                <h3 class="card-title">Welcome to TaskMate, {{current_user.first_name}}!</h3>
-                <p class="card-text"><i>See all tasks.</i></p>
-                <a class="btn btn-outline-dark" href="{{url_for('drivers')}}">Search</a>
-            </div>  
+  
+    <section class="py-5 text-center container">
+        <div class="row py-lg-3">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">Album example</h1>
+                <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+            </div>
         </div>
+    </section>
 
-    {% else %}
+    <div class="container">
+        <div class="card-columns d-flex justify-content-between align-items-center">
+            <a href="{{url_for('index')}}">
+                <div class="card">
+                    <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Drivers</h5>
+                        <p class="card-text">Content</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">500+ Drivers</small>
+                    </div>
+                </div>
+            </a> 
+            <a href="{{url_for('index')}}">
+                <div class="card">
+                    <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Learners</h5>
+                        <p class="card-text">Content</p>
+                        
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                        </div>
+                        
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">1000+ Learners</small>
+                    </div>
+                </div>
+            </a>     
+        </div>  
+    </div>
+           
 
-        <div 
-        style=" 
-        margin-top: -4%;
-        background: url('https://images.pexels.com/photos/8550825/pexels-photo-8550825.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
-        position: center;
-        background-size: cover;
-        height: 100vh;
-        width: 100%;">
-            <div style="margin-left: 15%; margin-top:10%;" class="card-img-overlay">
-                <h3 class="card-title">Welcome to TaskMate</h3>
-                <p class="card-text"><i>See all tasks.</i></p>
-                <a class="btn btn-outline-dark" href="{{url_for('drivers')}}">Search</a>
-            </div>  
+  
+    <footer class="text-muted py-5">
+        <div class="container">
+            <p class="float-end mb-1">
+                <a href="#">Back to top</a>
+            </p>
+            <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+            <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="../getting-started/introduction/">getting started guide</a>.</p>
         </div>
-
-    {% endif %}
-
-
+    </footer>
+        
 
 {% endblock %}
