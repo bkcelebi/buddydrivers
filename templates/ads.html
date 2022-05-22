@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>Tasks</title>
+    <title>Drivers</title>
 {% endblock %}
 
 {% block body %}
 
     {% if current_user.is_authenticated %}
     <br>
-        <h1 align="center">Tasks</h1>
+        <h1 align="center">Drivers</h1>
     <br>
         {% if posts|length < 1 %}
             <div class="container">
@@ -66,7 +66,7 @@
         
     {% else %}
         <br>
-            <h1 align="center">Tasks</h1>
+            <h1 align="center">Drivers</h1>
         <br>
         {% if posts|length < 1 %}
             <div class="container">
