@@ -5,6 +5,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from flask_bcrypt import Bcrypt
 from datetime import datetime
 
+
 #In this app, Flask documentation, sqlalchemy documentation and 
 #bcrypt documentations are used.
 #https://flask.palletsprojects.com/en/2.1.x/ (Flask doc)
@@ -186,6 +187,9 @@ def logout():
 @app.route('/drivers', methods=['GET'])
 # @login_required
 def drivers():
+
+    date = datetime.now()
+    
    
     page = request.args.get('page',1 , type=int)
     posts = Post.query.order_by(Post.date_created.desc()). \
@@ -193,19 +197,22 @@ def drivers():
     
     return render_template(
         'drivers.html',
-        posts=posts)
+        posts=posts,
+        date=date)
 
 @app.route('/learners', methods=['GET'])
 # @login_required
 def learners():
-   
+
+    date = datetime.now()
     page = request.args.get('page',1 , type=int)
     posts = Post.query.order_by(Post.date_created.desc()). \
     paginate(page=page, per_page=15)  
     
     return render_template(
         'learners.html',
-        posts=posts)
+        posts=posts,
+        date=date)
 
 
 @app.route('/search', methods=['GET'])
