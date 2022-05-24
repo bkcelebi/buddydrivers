@@ -205,7 +205,7 @@ def drivers():
 def learners():
 
     date = datetime.now()
-    page = request.args.get('page',1 , type=int)
+    page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.date_created.desc()). \
     paginate(page=page, per_page=15)  
     
@@ -218,14 +218,22 @@ def learners():
 @app.route('/search', methods=['GET'])
 def search():
     #create join on user table and filter by search param insensitively 
+    date = datetime.now()
     search = request.args.get('search')
+
+    page = request.args.get('page', 1, type=int)
+
     result = db.session.query(Post, User).join(User). \
-        filter(User.first_name.ilike(f'%{search}%')).all()
-            
+        filter((User.first_name.ilike(f'%{search}%')) | \
+                Post.content.ilike(f'%{search}%') | \
+                User.location.ilike(f'%{search}%')) . \
+                paginate(page=page, per_page=15)   
+
     return render_template(
         'search.html', 
         result=result,
-        search=search)
+        search=search,
+        date=date)
 
 
 @app.route('/profile', methods=['GET', 'POST'])

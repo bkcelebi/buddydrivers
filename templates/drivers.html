@@ -18,48 +18,55 @@
 
             <div class="container">
                 <br>
-                <div class="row">
+                <div class="row justify-content-between">
                     {% for post in posts.items %}
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ post.user.first_name }}</h5>
-                                <p class="card-text">
-                                    {% if post.content | length > 200  %}
-                                        {{ post.content[0:200] }} ...
-                                    {% else %}
-                                        {{ post.content }}
-                                    {% endif %}
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a 
-                                        class="btn btn-sm btn-outline-secondary"
-                                        href="{{url_for('index')}}">View
-                                        </a>                    
+                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                            <div class="card">
+                                <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ post.user.first_name }}</h5>
+                                    <p class="card-text">
+                                        {% if post.content | length > 200  %}
+                                            {{ post.content[0:200] }} ...
+                                        {% else %}
+                                            {{ post.content }}
+                                        {% endif %}
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a 
+                                            class="btn btn btn-outline-secondary"
+                                            href="{{url_for('index')}}">View
+                                            </a>                    
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-footer d-flex justify-content-between align-items-center">
-                                <small class="text-muted">{{post.user.location}}</small>
-                                <small class="text-muted">
-                                    {% if (date).day - (post.date_created).day < 1 %}
-                                        {% if (date).hour - (post.date_created).hour < 2 %}
-                                            {{(date).hour - (post.date_created).hour}} hour ago
-                                        {% elif (date).hour - (post.date_created).hour > 1 %}
-                                            {{(date).hour - (post.date_created).hour}} hours ago
+                                <div class="card-footer d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">{{post.user.location}}</small>
+                                    <small class="text-muted">
+                                        {% if (date).day - (post.date_created).day < 1 %}
+                                            {% if (date).hour - (post.date_created).hour == 1 %}
+                                                {% if (date).minute - (post.date_created).minute < 2 %}
+                                                    {{(date).minute - (post.date_created).minute}} min
+                                                {% elif (date).minute - (post.date_created).minute > 1 %}
+                                                    {{(date).minute - (post.date_created).minute}} mins
+                                                {% endif %}
+                                            {% elif (date).hour - (post.date_created).hour < 2 %}
+                                                {{(date).hour - (post.date_created).hour}} hour
+                                            {% elif (date).hour - (post.date_created).hour > 1 %}
+                                                {{(date).hour - (post.date_created).hour}} hours
+                                            {% endif %}
+                                        {% elif (date).day - (post.date_created).day == 1 %}
+                                            {{(date).day - (post.date_created).day}} day
+                                        {% elif (date).day - (post.date_created).day > 1 %}
+                                            {{(date).day - (post.date_created).day}} days
                                         {% endif %}
-                                    {% elif (date).day - (post.date_created).day == 1 %}
-                                        {{(date).day - (post.date_created).day}} day ago
-                                    {% elif (date).day - (post.date_created).day > 1 %}
-                                        {{(date).day - (post.date_created).day}} days ago
-                                    {% endif %}
-                                </small>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    {% endfor %}
+                            <br>
+                        </div>               
+                    {% endfor %}      
                 </div>
                 {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                     {% if page_num %}
@@ -86,47 +93,57 @@
 
     <div class="container">
         <br>
-        <div class="card-columns">
+        <div class="row justify-content-between">
             {% for post in posts.items %}
-                <div class="card">
-                    <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ post.user.first_name }}</h5>
-                        <p class="card-text">
-                            {% if post.content | length > 200  %}
-                                {{ post.content[0:200] }} ...
-                            {% else %}
-                                {{ post.content }}
-                            {% endif %}
-                        </p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a 
-                                class="btn btn-sm btn-outline-secondary"
-                                href="{{url_for('index')}}">View
-                                </a>                    
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="card">
+                        <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.user.first_name }}</h5>
+                            <p class="card-text">
+                                {% if post.content | length > 200  %}
+                                    {{ post.content[0:200] }} ...
+                                {% else %}
+                                    {{ post.content }}
+                                {% endif %}
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a 
+                                    class="btn btn btn-outline-secondary"
+                                    href="{{url_for('index')}}">View
+                                    </a>                    
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between align-items-center">
-                        <small class="text-muted">{{post.user.location}}</small>
-                        <small class="text-muted">
-                            {% if (date).day - (post.date_created).day < 1 %}
-                                {% if (date).hour - (post.date_created).hour < 2 %}
-                                    {{(date).hour - (post.date_created).hour}} hour ago
-                                {% elif (date).hour - (post.date_created).hour > 1 %}
-                                    {{(date).hour - (post.date_created).hour}} hours ago
+                        <div class="card-footer d-flex justify-content-between align-items-center">
+                            <small class="text-muted">{{post.user.location}}</small>
+                            <small class="text-muted">
+                                {% if (date).day - (post.date_created).day < 1 %}
+                                    {% if (date).hour - (post.date_created).hour == 1 %}
+                                        {% if (date).minute - (post.date_created).minute < 2 %}
+                                            {{(date).minute - (post.date_created).minute}} min
+                                        {% elif (date).minute - (post.date_created).minute > 1 %}
+                                            {{(date).minute - (post.date_created).minute}} mins
+                                        {% endif %}
+                                    {% elif (date).hour - (post.date_created).hour < 2 %}
+                                        {{(date).hour - (post.date_created).hour}} hour
+                                    {% elif (date).hour - (post.date_created).hour > 1 %}
+                                        {{(date).hour - (post.date_created).hour}} hours
+                                    {% endif %}
+                                {% elif (date).day - (post.date_created).day == 1 %}
+                                    {{(date).day - (post.date_created).day}} day
+                                {% elif (date).day - (post.date_created).day > 1 %}
+                                    {{(date).day - (post.date_created).day}} days
                                 {% endif %}
-                            {% elif (date).day - (post.date_created).day == 1 %}
-                                {{(date).day - (post.date_created).day}} day ago
-                            {% elif (date).day - (post.date_created).day > 1 %}
-                                {{(date).day - (post.date_created).day}} days ago
-                            {% endif %}
-                        </small>
+                            </small>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                    <br>
+                </div>               
+            {% endfor %}      
         </div>
+
         {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
             {% if page_num %}
                 {% if posts.page == page_num %}
