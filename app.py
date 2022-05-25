@@ -193,7 +193,7 @@ def drivers():
    
     page = request.args.get('page',1 , type=int)
     posts = Post.query.order_by(Post.date_created.desc()). \
-    paginate(page=page, per_page=15) 
+    paginate(page=page, per_page=10) 
     
     return render_template(
         'drivers.html',
@@ -207,7 +207,7 @@ def learners():
     date = datetime.now()
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.date_created.desc()). \
-    paginate(page=page, per_page=15)  
+    paginate(page=page, per_page=10)  
     
     return render_template(
         'learners.html',
@@ -227,7 +227,7 @@ def search():
         filter((User.first_name.ilike(f'%{search}%')) | \
                 Post.content.ilike(f'%{search}%') | \
                 User.location.ilike(f'%{search}%')) . \
-                paginate(page=page, per_page=15)   
+                paginate(page=page, per_page=5) 
 
     return render_template(
         'search.html', 
@@ -309,6 +309,20 @@ def delete(id):
     else:
         flash("Post not exist", category='error')
         return redirect(url_for('profile'))
+
+
+@app.route('/post/<int:id>')
+def post(id):
+
+    date = datetime.now()
+
+    posts = Post.query.get_or_404(id)
+
+    return render_template(
+            'post.html', 
+            posts=posts,
+            date=date)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

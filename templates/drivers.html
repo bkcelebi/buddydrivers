@@ -7,20 +7,24 @@
 {% block body %}
 
     {% if current_user.is_authenticated %}
-    <br>
-        <h1 align="center">Drivers</h1>
         {% if posts.items|length < 1 %}
             <div class="container">
                 <h5 style="margin-top: 5%;" align="center">There are no tasks yet. <a href="{{url_for('profile')}}">Create now</a></h5>     
             </div>
             
-        {% else %}
+            {% else %}
 
-            <div class="container">
+            <div class="container text-center">
                 <br>
-                <div class="row justify-content-between">
-                    {% for post in posts.items %}
-                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                <div class="row justify-content-between">     
+                    <div class="col-2 sidenav">
+                        <p><a href="#">Link</a></p>
+                        <p><a href="#">Link</a></p>
+                        <p><a href="#">Link</a></p>
+                    </div>
+                                
+                    <div class="col-sm-6  col-lg-6 text-left">
+                        {% for post in posts.items %}
                             <div class="card">
                                 <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
                                 <div class="card-body">
@@ -36,7 +40,7 @@
                                         <div class="btn-group">
                                             <a 
                                             class="btn btn btn-outline-secondary"
-                                            href="{{url_for('index')}}">View
+                                            href="/post/{{post.id}}">View
                                             </a>                    
                                         </div>
                                     </div>
@@ -65,101 +69,133 @@
                                 </div>
                             </div>
                             <br>
-                        </div>               
-                    {% endfor %}      
+                        {% endfor %}
+
+                        {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                            {% if page_num %}
+                                {% if posts.page == page_num %}
+                                    <a class="btn btn-outline-dark mb-4 active" href="{{url_for('drivers', page=page_num)}}">{{page_num}}</a>
+                                {% else %}
+                                    <a class="btn btn-outline-dark mb-4" href="{{url_for('drivers', page=page_num)}}">{{page_num}}</a>
+                                {% endif %}
+                            {% else %}
+                                ...
+                            {% endif %}
+                        {% endfor %}
+                    </div>               
+                
+                    <div class="col-2 sidenav position-relative">
+                        <p>ADS</p>
+                        <p>ADS</p>
+                    </div>
+
                 </div>
-                {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-                    {% if page_num %}
-                        {% if posts.page == page_num %}
-                            <a class="btn btn-outline-dark mb-4 active" href="{{url_for('drivers', page=page_num)}}">{{page_num}}</a>
-                        {% else %}
-                            <a class="btn btn-outline-dark mb-4" href="{{url_for('drivers', page=page_num)}}">{{page_num}}</a>
-                        {% endif %}
-                    {% else %}
-                        ...
-                    {% endif %}
-                {% endfor %}
+
                 <a href="#top" class="btn btn-outline-success float-right">
                     <i class="bi bi-chevron-double-up"></i>
                     Go to top
                 </a>
-            </div>
+                <br>
+
+            </div> 
             
         {% endif %}
         
-
-        
     {% else %}
 
-    <div class="container">
-        <br>
-        <div class="row justify-content-between">
-            {% for post in posts.items %}
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
-                    <div class="card">
-                        <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ post.user.first_name }}</h5>
-                            <p class="card-text">
-                                {% if post.content | length > 200  %}
-                                    {{ post.content[0:200] }} ...
-                                {% else %}
-                                    {{ post.content }}
-                                {% endif %}
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a 
-                                    class="btn btn btn-outline-secondary"
-                                    href="{{url_for('index')}}">View
-                                    </a>                    
+        {% if posts.items |length < 1 %}
+            <div class="container">
+                <h5 style="margin-top: 5%;" align="center">There are no posts yet. <a href="{{url_for('profile')}}">Create now</a></h5>     
+            </div>
+            
+        {% else %}
+
+            <div class="container text-center">
+                <br>
+                <div class="row justify-content-between">     
+                    <div class="col-2 sidenav">
+                        <p><a href="#">Link</a></p>
+                        <p><a href="#">Link</a></p>
+                        <p><a href="#">Link</a></p>
+                    </div>
+                                
+                    <div class="col-sm-6  col-lg-6 text-left">
+                        {% for post in posts.items %}
+                            <div class="card">
+                                <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ post.user.first_name }}</h5>
+                                    <p class="card-text">
+                                        {% if post.content | length > 200  %}
+                                            {{ post.content[0:200] }} ...
+                                        {% else %}
+                                            {{ post.content }}
+                                        {% endif %}
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a 
+                                            class="btn btn btn-outline-secondary"
+                                            href="/post/{{post.id}}">View
+                                            </a>                    
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">{{post.user.location}}</small>
+                                    <small class="text-muted">
+                                        {% if (date).day - (post.date_created).day < 1 %}
+                                            {% if (date).hour - (post.date_created).hour == 1 %}
+                                                {% if (date).minute - (post.date_created).minute < 2 %}
+                                                    {{(date).minute - (post.date_created).minute}} min
+                                                {% elif (date).minute - (post.date_created).minute > 1 %}
+                                                    {{(date).minute - (post.date_created).minute}} mins
+                                                {% endif %}
+                                            {% elif (date).hour - (post.date_created).hour < 2 %}
+                                                {{(date).hour - (post.date_created).hour}} hour
+                                            {% elif (date).hour - (post.date_created).hour > 1 %}
+                                                {{(date).hour - (post.date_created).hour}} hours
+                                            {% endif %}
+                                        {% elif (date).day - (post.date_created).day == 1 %}
+                                            {{(date).day - (post.date_created).day}} day
+                                        {% elif (date).day - (post.date_created).day > 1 %}
+                                            {{(date).day - (post.date_created).day}} days
+                                        {% endif %}
+                                    </small>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-footer d-flex justify-content-between align-items-center">
-                            <small class="text-muted">{{post.user.location}}</small>
-                            <small class="text-muted">
-                                {% if (date).day - (post.date_created).day < 1 %}
-                                    {% if (date).hour - (post.date_created).hour == 1 %}
-                                        {% if (date).minute - (post.date_created).minute < 2 %}
-                                            {{(date).minute - (post.date_created).minute}} min
-                                        {% elif (date).minute - (post.date_created).minute > 1 %}
-                                            {{(date).minute - (post.date_created).minute}} mins
-                                        {% endif %}
-                                    {% elif (date).hour - (post.date_created).hour < 2 %}
-                                        {{(date).hour - (post.date_created).hour}} hour
-                                    {% elif (date).hour - (post.date_created).hour > 1 %}
-                                        {{(date).hour - (post.date_created).hour}} hours
-                                    {% endif %}
-                                {% elif (date).day - (post.date_created).day == 1 %}
-                                    {{(date).day - (post.date_created).day}} day
-                                {% elif (date).day - (post.date_created).day > 1 %}
-                                    {{(date).day - (post.date_created).day}} days
-                                {% endif %}
-                            </small>
-                        </div>
-                    </div>
-                    <br>
-                </div>               
-            {% endfor %}      
-        </div>
+                            <br>
+                        {% endfor %}
 
-        {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-            {% if page_num %}
-                {% if posts.page == page_num %}
-                    <a class="btn btn-outline-dark mb-4 active" href="{{url_for('drivers', page=page_num)}}">{{page_num}}</a>
-                {% else %}
-                    <a class="btn btn-outline-dark mb-4" href="{{url_for('drivers', page=page_num)}}">{{page_num}}</a>
-                {% endif %}
-            {% else %}
-                ...
-            {% endif %}
-        {% endfor %}
-        <a href="#top" class="btn btn-outline-success float-right">
-            <i class="bi bi-chevron-double-up"></i>
-            Go to top
-        </a>
-    </div>      
+                        {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                            {% if page_num %}
+                                {% if posts.page == page_num %}
+                                    <a class="btn btn-outline-dark mb-4 active" href="{{url_for('drivers', page=page_num)}}">{{page_num}}</a>
+                                {% else %}
+                                    <a class="btn btn-outline-dark mb-4" href="{{url_for('drivers', page=page_num)}}">{{page_num}}</a>
+                                {% endif %}
+                            {% else %}
+                                ...
+                            {% endif %}
+                        {% endfor %}
+                    </div>               
+                
+                    <div class="col-2 sidenav position-relative">
+                        <p>ADS</p>
+                        <p>ADS</p>
+                    </div>
+
+                </div>
+
+                <a href="#top" class="btn btn-outline-success float-right">
+                    <i class="bi bi-chevron-double-up"></i>
+                    Go to top
+                </a>
+                <br>
+
+            </div> 
+            
+        {% endif %}
             
     {% endif %}
     

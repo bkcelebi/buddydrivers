@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>{{posts.user.first_name}}'s Post</title>
+
+{% endblock %}
+
+{% block body %}
+
+    {% if current_user.is_authenticated %}
+        <div class="container">
+            <br>
+            <div class="row justify-content-between text-center">
+                
+                <div class="col-2 sidenav">
+                    <div class="well">
+                    <p>ADS</p>
+                    </div>
+                    <div class="well">
+                    <p>ADS</p>
+                    </div>
+                </div>
+                            
+                <div class="col-sm-7  col-lg-7 text-left">
+                    
+                        <div class="card">
+                            <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ posts.user.first_name }}</h5>
+                                <p class="card-text">{{ posts.content }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a 
+                                        class="btn btn btn-outline-secondary"
+                                        href="#">Mail
+                                        </a>
+                                        <a 
+                                        class="btn btn btn-outline-secondary"
+                                        href="#">Call
+                                        </a>                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <small class="text-muted">{{posts.user.location}}</small>
+                                <small class="text-muted">
+                                    {% if (date).day - (posts.date_created).day < 1 %}
+                                        {% if (date).hour - (posts.date_created).hour == 1 %}
+                                            {% if (date).minute - (posts.date_created).minute < 2 %}
+                                                {{(date).minute - (posts.date_created).minute}} min
+                                            {% elif (date).minute - (posts.date_created).minute > 1 %}
+                                                {{(date).minute - (posts.date_created).minute}} mins
+                                            {% endif %}
+                                        {% elif (date).hour - (posts.date_created).hour < 2 %}
+                                            {{(date).hour - (posts.date_created).hour}} hour
+                                        {% elif (date).hour - (posts.date_created).hour > 1 %}
+                                            {{(date).hour - (posts.date_created).hour}} hours
+                                        {% endif %}
+                                    {% elif (date).day - (posts.date_created).day == 1 %}
+                                        {{(date).day - (posts.date_created).day}} day
+                                    {% elif (date).day - (posts.date_created).day > 1 %}
+                                        {{(date).day - (posts.date_created).day}} days
+                                    {% endif %}
+                                </small>
+                            </div>
+                        </div>
+                        <br>
+                    
+                </div>               
+            
+                <div class="col-2 sidenav">
+                    <div class="well">
+                    <p>ADS</p>
+                    </div>
+                    <div class="well">
+                    <p>ADS</p>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+
+    {% else %}
+
+        <div class="container">
+            <br>
+            <div class="row justify-content-between text-center">
+                
+                <div class="col-2 sidenav">
+                    <div class="well">
+                    <p>ADS</p>
+                    </div>
+                    <div class="well">
+                    <p>ADS</p>
+                    </div>
+                </div>
+                            
+                <div class="col-sm-7  col-lg-7 text-left">
+                    
+                        <div class="card">
+                            <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ posts.user.first_name }}</h5>
+                                <p class="card-text">{{ posts.content }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a 
+                                        class="btn btn btn-outline-secondary"
+                                        href="#">Mail
+                                        </a>
+                                        <a 
+                                        class="btn btn btn-outline-secondary"
+                                        href="#">Call
+                                        </a>                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <small class="text-muted">{{posts.user.location}}</small>
+                                <small class="text-muted">
+                                    {% if (date).day - (posts.date_created).day < 1 %}
+                                        {% if (date).hour - (posts.date_created).hour == 1 %}
+                                            {% if (date).minute - (posts.date_created).minute < 2 %}
+                                                {{(date).minute - (posts.date_created).minute}} min
+                                            {% elif (date).minute - (posts.date_created).minute > 1 %}
+                                                {{(date).minute - (posts.date_created).minute}} mins
+                                            {% endif %}
+                                        {% elif (date).hour - (posts.date_created).hour < 2 %}
+                                            {{(date).hour - (posts.date_created).hour}} hour
+                                        {% elif (date).hour - (posts.date_created).hour > 1 %}
+                                            {{(date).hour - (posts.date_created).hour}} hours
+                                        {% endif %}
+                                    {% elif (date).day - (posts.date_created).day == 1 %}
+                                        {{(date).day - (posts.date_created).day}} day
+                                    {% elif (date).day - (posts.date_created).day > 1 %}
+                                        {{(date).day - (posts.date_created).day}} days
+                                    {% endif %}
+                                </small>
+                            </div>
+                        </div>
+                        <br>
+                    
+                </div>               
+            
+                <div class="col-2 sidenav">
+                    <div class="well">
+                    <p>ADS</p>
+                    </div>
+                    <div class="well">
+                    <p>ADS</p>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+    
+    {% endif%}
+    
+{% endblock %}
+    
+
