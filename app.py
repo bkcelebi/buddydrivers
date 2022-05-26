@@ -1,4 +1,5 @@
 #importing the necessary packages and libraries for the app
+from email.policy import default
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -213,7 +214,6 @@ def learners():
         'learners.html',
         posts=posts,
         date=date)
-
 
 @app.route('/search', methods=['GET'])
 def search():
