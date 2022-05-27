@@ -224,7 +224,8 @@ def search():
     page = request.args.get('page', 1, type=int)
 
     result = db.session.query(Post, User).join(User). \
-        filter((User.first_name.ilike(f'%{search}%')) | \
+            order_by(Post.date_created.desc()). \
+            filter((User.first_name.ilike(f'%{search}%')) | \
                 Post.content.ilike(f'%{search}%') | \
                 User.location.ilike(f'%{search}%')) . \
                 paginate(page=page, per_page=5) 
