@@ -2,74 +2,75 @@
 
 {% block head %}
     <title>Home</title>
-    <style>
-        .bd-placeholder-img {
-          font-size: 1.125rem;
-          text-anchor: middle;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          user-select: none;
-        }
-  
-        @media (min-width: 768px) {
-          .bd-placeholder-img-lg {
-            font-size: 3.5rem;
-          }
-        }
-    </style>
 {% endblock %}
 
 {% block body %}
 
-    <main>
-  
-        <section class="py-4 text-center container">
-            <div class="row py-lg-3">
-                <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Ready to drive?</h1>
-                    <p class="lead text-muted">
-                        Do you have a learner permit? 
-                        Are you getting your essential driving lessons or 
-                        already completed them? Do you need more practice? 
-                        You are at the correct place.
-                        View the buddydrivers to find someone to practice with.
-                    </p>
-                </div>
-            </div>
-        </section>
+    <main class="container-fluid">
+        
+        <div class="row">
 
-        <div class="album bg-light">
-            <div class="container"> 
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                            <div class="card-body container">
-                                <p align="center" class="card-text">Find some buddydrivers to ask for practice!</p>
-                                <div class="row">
-                                    <div class="col text-center">
-                                        <a href="{{url_for('drivers')}}" class="btn btn btn-outline-secondary">View</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                            <div class="card-body container">
-                                <p align="center" class="card-text">Find some buddylearners to offer practice!</p>
-                                <div class="row">
-                                    <div class="col text-center">
-                                        <a href="{{url_for('learners')}}" class="btn btn-outline-secondary">View</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div 
+            style="margin-top: 2%;" 
+            class="col-2 sidenav text-center">
+                <p>ADS</p>
+                <p>ADS</p>
             </div>
+
+            <div class="col-md-8 col-lg-8">
+                <section class="py-4">
+                    <div class="row py-lg-3">
+                        <div class="col-lg-6 col-md-8 mx-auto">
+                            <h3 class="fw-light text-center">Ready to drive?</h3>
+                            <p class="lead text-muted text-justify mx-4">
+                                Do you have a learner permit? 
+                                Are you getting your essential driving lessons or 
+                                already completed them? Do you need more practice? 
+                                You are at the correct place.
+                                View the buddydrivers to find someone to practice with.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+    
+                <div class="card-group mx-5">
+
+                    <div 
+                    style="margin-right: 2%;" 
+                    class="card bg-dark ">
+                        <a href="/drivers" class="text-white">
+                            <img src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img" alt="...">
+                            <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                                <h5 class="card-title">BuddyDrivers</h5>
+                            </div>
+                        </a>
+                    </div>
+                
+                
+                
+                    <div class="card bg-dark">
+                        <a href="/learners" class="text-white">
+                            <img src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img" alt="...">
+                            <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                                <h5 class="card-title">BuddyLearners</h5>
+                            </div>
+                        </a>
+
+                    </div>
+                
+                </div>
+    
+                
+            </div>
+            
+            <div style="margin-top: 2%;" class="col-2 sidenav text-center">
+                <p>ADS</p>
+                <p>ADS</p>
+            </div>
+
         </div>
+        <br>
+        
     </main>
           
     

@@ -42,9 +42,10 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(80), nullable=False)
-    age = db.Column(db.Integer, nullable=False)
-    gender = db.Column(db.String(30), nullable=False)
-    location = db.Column(db.String(50), nullable=False)
+    # profile_pic =db.Column(db.String(), nullable=True) 
+    # age = db.Column(db.Integer, nullable=False)
+    # gender = db.Column(db.String(30), nullable=False)
+    # location = db.Column(db.String(50), nullable=False)
     posts = db.relationship('Post', backref='user')
 
     #creating this representative function 
@@ -241,6 +242,9 @@ def search():
 # @login_required
 def profile():
 
+    date = datetime.now()
+    page = request.args.get('page',1 , type=int)
+
     if request.method == 'POST':
         content = request.form['content']
 
@@ -263,9 +267,20 @@ def profile():
         return redirect(url_for('profile'))
 
     else:
-        return render_template(
-            'profile.html', 
-            user=current_user)
+        if current_user.is_authenticated:
+            posts = db.session.query(Post). \
+                filter(Post.user_id == current_user.id). \
+                paginate(page=page, per_page=5)
+
+            return render_template(
+                'profile.html', 
+                posts=posts,
+                date=date)
+        
+        else:
+            return render_template(
+                'profile.html')
+
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 @login_required
