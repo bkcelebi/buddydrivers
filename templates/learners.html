@@ -42,17 +42,20 @@
                                             {{ post.content }}
                                         {% endif %}
                                     </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a 
-                                            class="btn btn btn-outline-secondary"
-                                            href="/post/{{post.id}}">View
-                                            </a>                    
-                                        </div>
+
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <a 
+                                        class="btn btn-outline-secondary btn-block"
+                                        href="/post/{{post.id}}">View
+                                        </a>                    
                                     </div>
+
                                 </div>
                                 <div class="card-footer d-flex justify-content-between align-items-center">
                                     <small class="text-muted">{{post.user.location}}</small>
+                                    <small class="text-muted">Car:</small>
+                                    <small class="text-muted">Age: {{post.user.age}}</small>
+                                    <small class="text-muted">Language:</small>
                                     <small class="text-muted">
                                         {% if (date).day - (post.date_created).day < 1 %}
                                             {% if (date).hour - (post.date_created).hour == 1 %}
@@ -156,6 +159,9 @@
                                 </div>
                                 <div class="card-footer d-flex justify-content-between align-items-center">
                                     <small class="text-muted">{{post.user.location}}</small>
+                                    <small class="text-muted">Car:</small>
+                                    <small class="text-muted">Age: {{post.user.age}}</small>
+                                    <small class="text-muted">Language:</small>
                                     <small class="text-muted">
                                         {% if (date).day - (post.date_created).day < 1 %}
                                             {% if (date).hour - (post.date_created).hour == 1 %}

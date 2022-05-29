@@ -1,5 +1,5 @@
 #importing the necessary packages and libraries for the app
-from email.policy import default
+
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -42,6 +42,7 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(80), nullable=False)
+    # type = db.Column(db.String(50), nullable=False)
     # profile_pic =db.Column(db.String(), nullable=True) 
     # age = db.Column(db.Integer, nullable=False)
     # gender = db.Column(db.String(30), nullable=False)
@@ -238,48 +239,27 @@ def search():
         date=date)
 
 
-@app.route('/profile', methods=['GET', 'POST'])
+@app.route('/profile', methods=['GET'])
 # @login_required
 def profile():
 
     date = datetime.now()
     page = request.args.get('page',1 , type=int)
+    
+    if current_user.is_authenticated:
+        posts = db.session.query(Post). \
+            order_by(Post.date_created.desc()). \
+            filter(Post.user_id == current_user.id). \
+            paginate(page=page, per_page=5)
 
-    if request.method == 'POST':
-        content = request.form['content']
-
-        #if the content is empty
-        if len(content) < 1:
-            flash("Task too short!", category='error')
-            
-        else:
-            #passing required info to create a new task
-            new_post = Post(
-                content=content, 
-                user_id=current_user.id)
-
-            #creating the task
-            db.session.add(new_post)
-            db.session.commit()
-            flash("Task created successfully", category='success')
-            return redirect('drivers')
-        
-        return redirect(url_for('profile'))
-
+        return render_template(
+            'profile.html', 
+            posts=posts,
+            date=date)
+    
     else:
-        if current_user.is_authenticated:
-            posts = db.session.query(Post). \
-                filter(Post.user_id == current_user.id). \
-                paginate(page=page, per_page=5)
-
-            return render_template(
-                'profile.html', 
-                posts=posts,
-                date=date)
-        
-        else:
-            return render_template(
-                'profile.html')
+        return render_template(
+            'profile.html')
 
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
@@ -338,6 +318,35 @@ def post(id):
             'post.html', 
             posts=posts,
             date=date)
+
+
+@app.route('/create', methods=['GET', 'POST'])
+def create():
+
+    if request.method == 'POST':
+        content = request.form['content']
+
+        #if the content is empty
+        if len(content) < 1:
+            flash("Task too short!", category='error')
+            
+        else:
+            #passing required info to create a new task
+            new_post = Post(
+                content=content, 
+                user_id=current_user.id)
+
+            #creating the task
+            db.session.add(new_post)
+            db.session.commit()
+            flash("Task created successfully", category='success')
+            return redirect('drivers')
+        
+        return redirect(url_for('profile'))
+
+    return render_template(
+            'create.html') 
+            
 
 
 if __name__ == "__main__":
