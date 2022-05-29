@@ -67,9 +67,22 @@
 
                 </div>
 
+
+                <div class="form-row">
+                    <span style="margin-left: 1%;">Profile Photo</span><br>
+                    <div 
+                    style="margin-top: 2%; margin-right: 1%; margin-left: 1%;" 
+                    class="input-group row-md-6 mb-3">
+                        <input type="file" class="custom-file-input" id="profile_pic" name="profile_pic">
+                        <label class="custom-file-label" for="profile_pic">Upload Profile Photo</label>
+                    </div>
+
+                </div>
+ 
+
                 <div style="margin-top: 1%;" class="form-row">
 
-                    <div class="form-check">
+                    <div style="margin-left: 1%;" class="form-check">
                       <input class="form-check-input" type="checkbox" value="" id="T&C" name="T&C">
                       <label class="form-check-label" for="T&C">
                         Agree to terms and conditions
@@ -91,10 +104,10 @@
             </form>
         </div>
         
-    </div><br>
+    </div><br><br>
 
     <h5 align="center">Already have an account? <a href="{{url_for('login')}}"> Sign in!</a></h5>
-    <br>
+    
     {% endif %}
 
 
