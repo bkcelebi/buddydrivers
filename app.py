@@ -42,11 +42,22 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(80), nullable=False)
-    # type = db.Column(db.String(50), nullable=False)
-    # profile_pic =db.Column(db.String(), nullable=True) 
-    # age = db.Column(db.Integer, nullable=False)
-    # gender = db.Column(db.String(30), nullable=False)
-    # location = db.Column(db.String(50), nullable=False)
+    
+    #create the ones below
+    type = db.Column(db.String(50), nullable=False)
+    bday = db.Column(db.DateTime, nullable=False)
+    
+    profile_pic =db.Column(db.String(), nullable=True)
+    job_title =  db.Column(db.String(80), nullable=True)
+    location = db.Column(db.String(50), nullable=True)
+    # phone
+    # website
+    # instagram
+    # twitter
+    # tiktok
+    # facebook
+    
+    
     posts = db.relationship('Post', backref='user')
 
     #creating this representative function 
@@ -63,6 +74,9 @@ class Post(db.Model):
     content = db.Column(db.String(400), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # area = db.Column(db.String(100), nullable=True)
+    # post_pic =db.Column(db.String(), nullable=True)
+
 
     #creating this representative function 
     #if there is an error i will be able to
@@ -252,10 +266,14 @@ def profile():
             filter(Post.user_id == current_user.id). \
             paginate(page=page, per_page=5)
 
+        user = db.session.query(User). \
+            filter(User.id == current_user.id).first()
+
         return render_template(
             'profile.html', 
             posts=posts,
-            date=date)
+            date=date,
+            user=user)
     
     else:
         return render_template(
