@@ -44,18 +44,10 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     
     #create the ones below
-    type = db.Column(db.String(50), nullable=False)
-    bday = db.Column(db.DateTime, nullable=False)
+    # bday = db.Column(db.DateTime, nullable=False)
+    # profile_pic =db.Column(db.String(), nullable=True)
+
     
-    profile_pic =db.Column(db.String(), nullable=True)
-    job_title =  db.Column(db.String(80), nullable=True)
-    location = db.Column(db.String(50), nullable=True)
-    # phone
-    # website
-    # instagram
-    # twitter
-    # tiktok
-    # facebook
     
     
     posts = db.relationship('Post', backref='user')
@@ -74,8 +66,9 @@ class Post(db.Model):
     content = db.Column(db.String(400), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    # area = db.Column(db.String(100), nullable=True)
+    # location = db.Column(db.String(100), nullable=True)
     # post_pic =db.Column(db.String(), nullable=True)
+    # Language
 
 
     #creating this representative function 
