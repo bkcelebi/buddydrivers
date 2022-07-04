@@ -23,7 +23,7 @@
 
         <div class="d-flex justify-content-center">
             <!-- form design is from bootstrap https://getbootstrap.com/docs/5.0/forms/overview/-->
-            <form action="/signup" method="POST">
+            <form action="/signup" method="POST" enctype="multipart/form-data">
                 
                 <div class="form-row">
 
@@ -61,8 +61,13 @@
                 <div class="form-row">
 
                     <div class="form-group col-md-4 mb-3">
-                        <label for="dob">Date of Birth</label>
-                        <input class="form-control" type="date" id="dob" name="dob">
+                        <label for="age">Date of Birth</label>
+                        <input 
+                        class="form-control" 
+                        type="date" 
+                        id="age" 
+                        name="age"
+                        >
                     </div>
 
                 </div>

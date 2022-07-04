@@ -9,7 +9,7 @@
     {% if current_user.is_authenticated %}
         {% if posts.items|length < 1 %}
             <div class="container">
-                <h5 style="margin-top: 5%;" align="center">There are no tasks yet. <a href="{{url_for('profile')}}">Create now</a></h5>     
+                <h5 style="margin-top: 5%;" align="center">There are no posts yet. <a href="{{url_for('profile')}}">Create now</a></h5>     
             </div>
             
             {% else %}
@@ -137,9 +137,9 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
                                         <h5 class="card-title">{{ post.user.first_name }}</h5>
-                                        <a style="color: rgb(47, 47, 47);" href="#">
+                                        <!-- <a style="color: rgb(47, 47, 47);" href="#">
                                             <i class="bi bi-bookmark-heart"></i>
-                                        </a>
+                                        </a> -->
                                     </div>
                                     <p class="card-text">
                                         {% if post.content | length > 200  %}

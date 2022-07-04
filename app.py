@@ -1,5 +1,6 @@
 #importing the necessary packages and libraries for the app
 
+from calendar import month
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -42,10 +43,10 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(80), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
     
     #create the ones below
-    # bday = db.Column(db.DateTime, nullable=False)
-    # profile_pic =db.Column(db.String(), nullable=True)
+    profile_pic =db.Column(db.String(), nullable=True)
 
     
     
@@ -93,9 +94,11 @@ def signup():
         email = request.form['mail']
         password = request.form['pwd']
         password2 = request.form['pwd2']
-        age = request.form['age']
-        gender = request.form['gender']
-        location = request.form['location']
+        dob = request.form['age']
+        
+        # gender = request.form['gender']
+        # location = request.form['location']
+        profile_pic = request.files['profile_pic']
 
         #validating the data before pushing them to database to create a user profile
         if len(first_name) > 50:
@@ -114,12 +117,12 @@ def signup():
             flash('Passwords do NOT match', category='error')
         elif len(password) < 8:
             flash('Password must be at least 8 characters', category='error')
-        elif age == "":
+        elif dob == "":
             flash('Age must be filled', category='error')
-        elif gender == "":
-            flash('Gender must be filled', category='error')
-        elif location == "":
-            flash('Location must be filled', category='error')
+        # elif gender == "":
+        #     flash('Gender must be filled', category='error')
+        # elif location == "":
+        #     flash('Location must be filled', category='error')
         else:
             #checking if the email is used already
             existing_email = User.query.filter_by(
@@ -132,10 +135,15 @@ def signup():
             else:
                 #4 rows of code below is from https://www.youtube.com/watch?v=71EU8gnZqZQ&t=1442s
                 hashed_pw = bcrypt.generate_password_hash(password)
+                
+                # yyyy = dob[:4]
+                # age = datetime.now().year - int(yyyy)
+            
 
                 new_user = User(email=email, first_name=first_name, 
-                password = hashed_pw ,last_name=last_name, age=age, 
-                gender=gender, location=location)
+                password = hashed_pw ,last_name=last_name, age=dob,
+                profile_pic=profile_pic) 
+                #gender=gender, location=location)
             
                 db.session.add(new_user)
                 db.session.commit()
@@ -262,11 +270,14 @@ def profile():
         user = db.session.query(User). \
             filter(User.id == current_user.id).first()
 
+        age = int(user.age[:4])
+
         return render_template(
             'profile.html', 
             posts=posts,
             date=date,
-            user=user)
+            user=user,
+            age=age)
     
     else:
         return render_template(
