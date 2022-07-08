@@ -1,6 +1,5 @@
 #importing the necessary packages and libraries for the app
 
-from calendar import month
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -46,7 +45,7 @@ class User(db.Model, UserMixin):
     age = db.Column(db.Integer, nullable=False)
     
     #create the ones below
-    profile_pic =db.Column(db.String(), nullable=True)
+    # profile_pic =db.Column(db.String(30), nullable=False, default='default.png')
 
     
     
@@ -96,9 +95,7 @@ def signup():
         password2 = request.form['pwd2']
         dob = request.form['age']
         
-        # gender = request.form['gender']
-        # location = request.form['location']
-        profile_pic = request.files['profile_pic']
+        # profile_pic = request.files['profile_pic']
 
         #validating the data before pushing them to database to create a user profile
         if len(first_name) > 50:
@@ -119,10 +116,7 @@ def signup():
             flash('Password must be at least 8 characters', category='error')
         elif dob == "":
             flash('Age must be filled', category='error')
-        # elif gender == "":
-        #     flash('Gender must be filled', category='error')
-        # elif location == "":
-        #     flash('Location must be filled', category='error')
+        
         else:
             #checking if the email is used already
             existing_email = User.query.filter_by(
@@ -135,15 +129,12 @@ def signup():
             else:
                 #4 rows of code below is from https://www.youtube.com/watch?v=71EU8gnZqZQ&t=1442s
                 hashed_pw = bcrypt.generate_password_hash(password)
-                
-                # yyyy = dob[:4]
-                # age = datetime.now().year - int(yyyy)
             
 
                 new_user = User(email=email, first_name=first_name, 
-                password = hashed_pw ,last_name=last_name, age=dob,
-                profile_pic=profile_pic) 
-                #gender=gender, location=location)
+                password = hashed_pw ,last_name=last_name, age=dob)
+                #profile_pic=profile_pic) 
+                
             
                 db.session.add(new_user)
                 db.session.commit()
@@ -258,6 +249,8 @@ def search():
 # @login_required
 def profile():
 
+    # profile_pic = url_for('static', filename='profile_pics/' + current_user.profile_pic )
+
     date = datetime.now()
     page = request.args.get('page',1 , type=int)
     
@@ -270,7 +263,11 @@ def profile():
         user = db.session.query(User). \
             filter(User.id == current_user.id).first()
 
-        age = int(user.age[:4])
+        yyyy = int(user.age[:4])
+        mm = int(user.age[5:7])
+
+        age = (date.month + ((date.year - yyyy)*12) + mm) // 12
+
 
         return render_template(
             'profile.html', 
