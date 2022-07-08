@@ -41,9 +41,14 @@
                                     <h5 class="my-3">{{user.first_name}} - {{age-2}}</h5>
                                     <p class="my-3">{{user.email}}</p>
 
+                                    {% if current_user.id == user.id %}
+
+                                    {% else %}
                                     <div class="d-flex justify-content-center mb-2">
                                         <button type="button" class="btn btn-outline-primary ms-1">Message</button>
                                     </div>
+
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
