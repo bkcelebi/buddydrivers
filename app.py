@@ -66,10 +66,10 @@ class Post(db.Model):
     content = db.Column(db.String(400), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    # location = db.Column(db.String(100), nullable=True)
-    # post_pic =db.Column(db.String(), nullable=True)
-    # Language
+    location = db.Column(db.String(100), nullable=True)
+    language = db.Column(db.String(100), nullable=True)
 
+    # post_pic =db.Column(db.String(), nullable=True)
 
     #creating this representative function 
     #if there is an error i will be able to
@@ -170,7 +170,7 @@ def login():
                 if bcrypt.check_password_hash(user.password, password):
                     login_user(user)
                     flash('Successfully signed in', category='success')
-                    return redirect(url_for('profile'))
+                    return redirect(url_for('drivers'))
                 #else reject login request
                 else:
                     flash('Incorrect Email or Password', category='error')
@@ -209,20 +209,6 @@ def drivers():
         posts=posts,
         date=date)
 
-@app.route('/learners', methods=['GET'])
-# @login_required
-def learners():
-
-    date = datetime.now()
-    page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.date_created.desc()). \
-    paginate(page=page, per_page=10)  
-    
-    return render_template(
-        'learners.html',
-        posts=posts,
-        date=date)
-
 @app.route('/search', methods=['GET'])
 def search():
     #create join on user table and filter by search param insensitively 
@@ -235,7 +221,8 @@ def search():
             order_by(Post.date_created.desc()). \
             filter((User.first_name.ilike(f'%{search}%')) | \
                 Post.content.ilike(f'%{search}%') | \
-                User.location.ilike(f'%{search}%')) . \
+                Post.language.ilike(f'%{search}%') | \
+                Post.location.ilike(f'%{search}%')) . \
                 paginate(page=page, per_page=5) 
 
     return render_template(
@@ -245,40 +232,40 @@ def search():
         date=date)
 
 
-@app.route('/profile', methods=['GET'])
+@app.route('/profile/<int:id>', methods=['GET'])
 # @login_required
-def profile():
+def profile(id):
 
     # profile_pic = url_for('static', filename='profile_pics/' + current_user.profile_pic )
 
     date = datetime.now()
     page = request.args.get('page',1 , type=int)
     
-    if current_user.is_authenticated:
-        posts = db.session.query(Post). \
-            order_by(Post.date_created.desc()). \
-            filter(Post.user_id == current_user.id). \
-            paginate(page=page, per_page=5)
-
-        user = db.session.query(User). \
-            filter(User.id == current_user.id).first()
-
-        yyyy = int(user.age[:4])
-        mm = int(user.age[5:7])
-
-        age = (date.month + ((date.year - yyyy)*12) + mm) // 12
-
-
-        return render_template(
-            'profile.html', 
-            posts=posts,
-            date=date,
-            user=user,
-            age=age)
     
-    else:
-        return render_template(
-            'profile.html')
+    posts = db.session.query(Post). \
+        order_by(Post.date_created.desc()). \
+        filter(Post.user_id == id). \
+        paginate(page=page, per_page=5)
+
+    user = db.session.query(User). \
+        filter(User.id == id).first()
+
+    yyyy = int(user.age[:4])
+    mm = int(user.age[5:7])
+
+    age = (date.month + ((date.year - yyyy)*12) + mm) // 12
+
+
+    return render_template(
+        'profile.html', 
+        posts=posts,
+        date=date,
+        user=user,
+        age=age)
+    
+    # else:
+    #     return render_template(
+    #         'profile.html')
 
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
@@ -344,16 +331,26 @@ def create():
 
     if request.method == 'POST':
         content = request.form['content']
+        language = request.form['lang']
+        location = request.form['location']
 
         #if the content is empty
         if len(content) < 1:
             flash("Task too short!", category='error')
+        if len(language) == '':
+            flash("Language cannot be empty!", category='error')
+        if len(location) == '':
+            flash("Please choose your county", category='error')
             
         else:
             #passing required info to create a new task
             new_post = Post(
                 content=content, 
-                user_id=current_user.id)
+                user_id=current_user.id,
+                location=location,
+                language=language
+                )
+
 
             #creating the task
             db.session.add(new_post)

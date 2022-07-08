@@ -9,7 +9,7 @@
     {% if current_user.is_authenticated %}
         {% if posts.items|length < 1 %}
             <div class="container">
-                <h5 style="margin-top: 5%;" align="center">There are no posts yet. <a href="{{url_for('profile')}}">Create now</a></h5>     
+                <h5 style="margin-top: 5%;" align="center">There are no posts yet. <a href="{{url_for('create')}}">Create now</a></h5>     
             </div>
             
             {% else %}
@@ -30,7 +30,9 @@
                                 <div class="card-body">
 
                                     <div class="d-flex justify-content-between">
-                                        <h5 class="card-title">{{ post.user.first_name }}</h5>
+                                        <a href="/profile/{{post.user.id}}">
+                                            <h5 class="card-title">{{ post.user.first_name }}</h5>
+                                        </a>
                                         <!-- <a style="color: rgb(47, 47, 47);" href="#">
                                             <i class="bi bi-bookmark-heart"></i>
                                         </a> -->
@@ -53,10 +55,8 @@
 
                                 </div>
                                 <div class="card-footer d-flex justify-content-between align-items-center">
-                                    <small class="text-muted">{{post.user.location}}</small>
-                                    <small class="text-muted">Car:</small>
-                                    <small class="text-muted">Age: {{post.user.age}}</small>
-                                    <small class="text-muted">Language:</small>
+                                    <small class="text-muted">{{post.location}}</small>
+                                    <small class="text-muted">Language: {{post.language}}</small>
 
                                     <small class="text-muted">
                                         {% if (date).day - (post.date_created).day < 1 %}
@@ -136,7 +136,9 @@
                                 <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
-                                        <h5 class="card-title">{{ post.user.first_name }}</h5>
+                                        <a href="/profile/{{post.user.id}}">
+                                            <h5 class="card-title">{{ post.user.first_name }}</h5>
+                                        </a>
                                         <!-- <a style="color: rgb(47, 47, 47);" href="#">
                                             <i class="bi bi-bookmark-heart"></i>
                                         </a> -->
@@ -158,10 +160,8 @@
 
                                 </div>
                                 <div class="card-footer d-flex justify-content-between align-items-center">
-                                    <small class="text-muted">{{post.user.location}}</small>
-                                    <small class="text-muted">Car:</small>
-                                    <small class="text-muted">Age: {{post.user.age}}</small>
-                                    <small class="text-muted">Language:</small>
+                                    <small class="text-muted">{{post.location}}</small>
+                                    <small class="text-muted">Language: {{post.language}}</small>
                                     <small class="text-muted">
                                         {% if (date).day - (post.date_created).day < 1 %}
                                             {% if (date).hour - (post.date_created).hour == 1 %}
