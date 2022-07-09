@@ -9,7 +9,7 @@
     {% if current_user.is_authenticated %}
         {% if posts.items|length < 1 %}
             <div class="container">
-                <h5 style="margin-top: 5%;" align="center">There are no posts yet. <a href="{{url_for('create')}}">Create now</a></h5>     
+                <h5 style="margin-top: 5%; margin-bottom: 300px;" align="center">There are no ads yet. <a href="{{url_for('create')}}">Create now</a></h5>     
             </div>
             
             {% else %}
@@ -17,10 +17,9 @@
             <div class="container text-center">
                 <br>
                 <div class="row justify-content-between">     
-                    <div class="col-2 sidenav">
-                        <p><a href="#">Link</a></p>
-                        <p><a href="#">Link</a></p>
-                        <p><a href="#">Link</a></p>
+                    <div class="col-2 sidenav position-relative">
+                        <p>ADS</p>
+                        <p>ADS</p>
                     </div>
                                 
                     <div class="col-sm-6  col-lg-6 text-left">
@@ -33,9 +32,17 @@
                                         <a href="/profile/{{post.user.id}}">
                                             <h5 class="card-title">{{ post.user.first_name }}</h5>
                                         </a>
-                                        <!-- <a style="color: rgb(47, 47, 47);" href="#">
-                                            <i class="bi bi-bookmark-heart"></i>
-                                        </a> -->
+                                        {% if current_user.id == post.user.id %}
+                                        <div class="dropdown">
+                                            <i class="bi bi-gear-fill dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                            
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                              <a class="dropdown-item" href="/update-post/{{post.id}}">Update</a>
+                                              <a class="dropdown-item" href="/delete-post/{{post.id}}">Delete</a>
+                                            </div>
+                                        </div>
+
+                                        {% endif %}
                                     </div>
 
                                     <p class="card-text">
@@ -116,7 +123,7 @@
 
         {% if posts.items |length < 1 %}
             <div class="container">
-                <h5 style="margin-top: 5%;" align="center">There are no posts yet. <a href="{{url_for('profile')}}">Create now</a></h5>     
+                <h5 style="margin-top: 5%; margin-bottom: 300px;" align="center">There are no posts yet. <a href="/create">Create now</a></h5>     
             </div>
             
         {% else %}
@@ -124,10 +131,9 @@
             <div class="container text-center">
                 <br>
                 <div class="row justify-content-between">     
-                    <div class="col-2 sidenav">
-                        <p><a href="#">Link</a></p>
-                        <p><a href="#">Link</a></p>
-                        <p><a href="#">Link</a></p>
+                    <div class="col-2 sidenav position-relative">
+                        <p>ADS</p>
+                        <p>ADS</p>
                     </div>
                                 
                     <div class="col-sm-6  col-lg-6 text-left">
@@ -139,9 +145,18 @@
                                         <a href="/profile/{{post.user.id}}">
                                             <h5 class="card-title">{{ post.user.first_name }}</h5>
                                         </a>
-                                        <!-- <a style="color: rgb(47, 47, 47);" href="#">
-                                            <i class="bi bi-bookmark-heart"></i>
-                                        </a> -->
+                                        {% if current_user.id == post.user.id %}
+                                        <div class="dropdown">
+                                            <i class="bi bi-gear-fill dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                            
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                              <a class="dropdown-item" href="/update-post/{{post.id}}">Update</a>
+                                              <a class="dropdown-item" href="/delete-post/{{post.id}}">Delete</a>
+                                            </div>
+                                        </div>
+
+                                        {% endif %}
+
                                     </div>
                                     <p class="card-text">
                                         {% if post.content | length > 200  %}

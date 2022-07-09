@@ -239,13 +239,13 @@ def profile(id):
     # profile_pic = url_for('static', filename='profile_pics/' + current_user.profile_pic )
 
     date = datetime.now()
-    page = request.args.get('page',1 , type=int)
+    
     
     
     posts = db.session.query(Post). \
         order_by(Post.date_created.desc()). \
-        filter(Post.user_id == id). \
-        paginate(page=page, per_page=5)
+        filter(Post.user_id == id).all()
+        
 
     user = db.session.query(User). \
         filter(User.id == id).first()
@@ -268,7 +268,7 @@ def profile(id):
     #         'profile.html')
 
 
-@app.route('/update/<int:id>', methods=['GET', 'POST'])
+@app.route('/update-post/<int:id>', methods=['GET', 'POST'])
 @login_required
 def update(id):
     posts = Post.query.get_or_404(id)
@@ -277,39 +277,52 @@ def update(id):
         #if input is left blank
         if request.form['content'].strip() == '':
             flash('Post cannot be blank', category='error')
-            return redirect(url_for('profile'))
+            return render_template(
+            'update-post.html', 
+            posts=posts)
 
-        elif len(request.form['content']) > 0:
-            #3 rows of code below is from https://www.youtube.com/watch?v=Z1RJmh_OqeA
-            posts.content = request.form['content']
-            db.session.commit()
-            flash('Post edited', category='success')
-            return redirect(url_for('profile'))
+        elif request.form['location'].strip() == '':
+            flash('Location cannot be blank', category='error')
+            return render_template(
+            'update-post.html', 
+            posts=posts)
 
+        elif request.form['lang'].strip() == '':
+            flash('Language cannot be empty', category='error')
+            return render_template(
+            'update-post.html', 
+            posts=posts)
         else:
-            flash('Post cannot be blank', category='error')
-            return redirect(url_for('profile'))
+            #3 rows of code below is from https://www.youtube.com/watch?v=Z1RJmh_OqeA
+            posts.content = request.form['content'].strip()
+            posts.location = request.form['location']
+            posts.language = request.form['lang'].strip()
+            db.session.commit()
+            flash('Ad updated', category='success')
+            return redirect(url_for('drivers'))
+            
 
     else:
         return render_template(
-            'update.html', 
+            'update-post.html', 
             posts=posts)
 
 
-@app.route('/delete/<int:id>')
+@app.route('/delete-post/<int:id>')
 @login_required
 def delete(id):
     posts_to_delete = Post.query.get_or_404(id)
 
+    
     if posts_to_delete:
         #3 rows of code below is from https://www.youtube.com/watch?v=Z1RJmh_OqeA
         db.session.delete(posts_to_delete)
         db.session.commit()
-        flash('Post deleted', category='success')
-        return redirect(url_for('profile'))
+        flash('Ad deleted', category='success')
+        return redirect(url_for('drivers'))
 
     else:
-        flash("Post not exist", category='error')
+        flash("Ad not exist", category='error')
         return redirect(url_for('profile'))
 
 
@@ -337,9 +350,9 @@ def create():
         #if the content is empty
         if len(content) < 1:
             flash("Task too short!", category='error')
-        if len(language) == '':
+        elif language.strip() == '':
             flash("Language cannot be empty!", category='error')
-        if len(location) == '':
+        elif location.strip() == '':
             flash("Please choose your county", category='error')
             
         else:
@@ -355,10 +368,10 @@ def create():
             #creating the task
             db.session.add(new_post)
             db.session.commit()
-            flash("Task created successfully", category='success')
+            flash("Ad created successfully", category='success')
             return redirect('drivers')
         
-        return redirect(url_for('profile'))
+        return redirect(url_for('create'))
 
     return render_template(
             'create.html') 

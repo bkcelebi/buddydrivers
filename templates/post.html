@@ -42,7 +42,8 @@
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-between align-items-center">
-                                <small class="text-muted">{{posts.user.location}}</small>
+                                <small class="text-muted">{{posts.location}}</small>
+                                <small class="text-muted">Language: {{posts.language}}</small>
                                 <small class="text-muted">
                                     {% if (date).day - (posts.date_created).day < 1 %}
                                         {% if (date).hour - (posts.date_created).hour == 1 %}
@@ -116,7 +117,8 @@
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-between align-items-center">
-                                <small class="text-muted">{{posts.user.location}}</small>
+                                <small class="text-muted">{{posts.location}}</small>
+                                <small class="text-muted">Language: {{posts.language}}</small>
                                 <small class="text-muted">
                                     {% if (date).day - (posts.date_created).day < 1 %}
                                         {% if (date).hour - (posts.date_created).hour == 1 %}
