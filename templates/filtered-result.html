@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Filtered Result</title>
+{% endblock %}
+
+{% block body %}
+
+    {% if result == [] %}
+        <h3 style="margin-top: 2%;" align="center">No result found</h3> 
+        
+    {% else %}
+        <div class="container text-center">
+            <br>
+            <div class="row justify-content-between">     
+                <div class="col-2 sidenav position-relative">
+                    <p>ADS</p>
+                    <p>ADS</p>
+                </div>
+                            
+                <div class="col-sm-6  col-lg-6 text-left">
+                    {% for post in result%}
+                        <div class="card">
+                            <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
+                            <div class="card-body">
+                                <a href="/profile/{{post.user.id}}">
+                                    <h5 class="card-title">{{ post.user.first_name }}</h5>
+                                </a>
+                                <p class="card-text">
+                                    {% if post.content | length > 200  %}
+                                        {{ post.content[0:200] }} ...
+                                    {% else %}
+                                        {{ post.content }}
+                                    {% endif %}
+                                </p>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <a 
+                                    class="btn btn-outline-secondary btn-block"
+                                    href="/post/{{post.id}}">View
+                                    </a>                    
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <small class="text-muted">{{post.location}}</small>
+                                <small class="text-muted">Language: {{post.language}}</small>
+                                <small class="text-muted">
+                                    {% if (date).day - (post.date_created).day < 1 %}
+                                        {% if (date).hour - (post.date_created).hour == 1 %}
+                                            {% if (date).minute - (post.date_created).minute < 2 %}
+                                                {{(date).minute - (post.date_created).minute}} min
+                                            {% elif (date).minute - (post.date_created).minute > 1 %}
+                                                {{(date).minute - (post.date_created).minute}} mins
+                                            {% endif %}
+                                        {% elif (date).hour - (post.date_created).hour < 2 %}
+                                            {{(date).hour - (post.date_created).hour}} hour
+                                        {% elif (date).hour - (post.date_created).hour > 1 %}
+                                            {{(date).hour - (post.date_created).hour}} hours
+                                        {% endif %}
+                                    {% elif (date).day - (post.date_created).day == 1 %}
+                                        {{(date).day - (post.date_created).day}} day
+                                    {% elif (date).day - (post.date_created).day > 1 %}
+                                        {{(date).day - (post.date_created).day}} days
+                                    {% endif %}
+                                </small>
+                            </div>
+                        </div>
+                        <br>
+                    {% endfor %}
+
+                </div>               
+            
+                <div class="col-2 sidenav position-relative">
+                    <p>ADS</p>
+                    <p>ADS</p>
+                </div>
+
+            </div>
+
+            <a href="#top" class="btn btn-outline-success float-right">
+                <i class="bi bi-chevron-double-up"></i>
+                Go to top
+            </a>
+            <br>
+
+        </div> 
+    {% endif %}
+    
+{% endblock %}

@@ -233,6 +233,51 @@ def search():
         date=date)
 
 
+@app.route('/filtered-result', methods=['GET', 'POST'])
+def filtered_result():
+    #create join on user table and filter by search param insensitively 
+    date = datetime.now()
+
+    if request.method == 'POST':
+
+        if request.form['location'] == 'any':
+            language = request.form['lang'].strip()
+
+            result = db.session.query(Post). \
+                    filter_by(Post.language.like(language))
+
+            return render_template(
+                'filtered-result.html', 
+                result=result,
+                date=date)
+
+        elif request.form['lang'].strip() == '':
+            location = request.form['location']
+
+            result = db.session.query(Post). \
+                filter_by(Post.location.like(location))
+
+            return render_template(
+                'filtered-result.html', 
+                result=result,
+                date=date)
+        
+        else:
+            location = request.form['location']
+            language = request.form['lang'].strip()
+
+            result = db.session.query(Post). \
+                    filter_by(Post.location.like(location)). \
+                    filter_by(Post.language.like(language))
+
+            return render_template(
+                'filtered-result.html', 
+                result=result,
+                date=date)
+
+    else:
+        return redirect(url_for('drivers'))
+
 @app.route('/profile/<int:id>', methods=['GET'])
 # @login_required
 def profile(id):
