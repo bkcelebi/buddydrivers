@@ -38,8 +38,27 @@
                                 <div class="card-body text-center">
                                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                                         class="rounded-circle img-fluid" style="width: 150px;">       
-                                    <h5 class="my-3">{{user.first_name}} - {{age-2}}</h5>
+
+                                    <div class="d-flex justify-content-center">
+                                        <h5 class="my-3">{{user.first_name}} - {{age-2}}</h5>
+    
+                                        {% if current_user.id == user.id %}
+    
+                                            <div class="dropdown my-3" style="margin-left: 7px;">
+                                                <i class="bi bi-gear-fill dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                                
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="/update_user/{{user.id}}">Update</a>
+                                                    <a class="dropdown-item" href="/delete-user/{{user.id}}">Delete</a>
+                                                </div>
+                                            </div>
+    
+                                        {% endif %}
+    
+                                    </div>
+
                                     <p class="my-3">{{user.email}}</p>
+
 
                                     {% if current_user.id == user.id %}
 
@@ -104,15 +123,33 @@
                             <div class="card-body text-center">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                                     class="rounded-circle img-fluid" style="width: 150px;">       
-                                <h5 class="my-3">{{user.first_name}} - {{age-2}}</h5>
-                                <p class="my-3">{{user.email}}</p>
+                                
+                                <div class="d-flex justify-content-center">
+                                    <h5 class="my-3">{{user.first_name}} - {{age-2}}</h5>
+
+                                    {% if current_user.id == user.id %}
+
+                                        <div class="dropdown my-3" style="margin-left: 7px;">
+                                            <i class="bi bi-gear-fill dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                            
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="/update-user/{{user.id}}">Update</a>
+                                                <a class="dropdown-item" href="/delete-user/{{user.id}}">Delete</a>
+                                            </div>
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+
+                                <p class="my-1">{{user.email}}</p>
 
                                 {% if current_user.id == user.id %}
 
-                                    {% else %}
-                                    <div class="d-flex justify-content-center mb-2">
-                                        <button type="button" class="btn btn-outline-primary ms-1">Message</button>
-                                    </div>
+                                {% else %}
+                                <div class="d-flex justify-content-center mb-2">
+                                    <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                                </div>
 
                                 {% endif %}
                             </div>

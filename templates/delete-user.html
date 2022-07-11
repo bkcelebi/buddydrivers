@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Delete User Account</title>
+    {% if current_user.is_anonymous %}
+        <meta http-equiv="REFRESH" content="4; login">
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    {% if current_user.is_authenticated %}
+
+
+    <div class="container">
+        
+        <br><br>
+
+        <div class="d-flex justify-content-center" style="margin-bottom: 15%;">
+            <!-- form design is from bootstrap https://getbootstrap.com/docs/5.0/forms/overview/-->
+            <form action="/delete-user/{{user.id}}" method="POST" >
+                    
+                <div class="form-row">            
+       
+                    <label for="pwd">Enter Password to Delete User Account</label>
+                    <input class="form-control" type="password" id="pwd" name="pwd" placeholder="Password">
+                                    
+                </div>
+                
+                <input class="btn btn-outline-danger my-3" type="submit" value="Delete"></input>
+            </form>
+        </div>
+        
+    </div><br>
+       
+    {% else %}
+        <br>
+            <h3 align="center" style="margin-top: 10%;">You are being redirected to log in!</h3>
+        <br>
+
+    {% endif %}
+    
+    
+{% endblock %}

@@ -1,5 +1,6 @@
 #importing the necessary packages and libraries for the app
 
+from tkinter import CASCADE
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -50,7 +51,7 @@ class User(db.Model, UserMixin):
     
     
     
-    posts = db.relationship('Post', backref='user')
+    posts = db.relationship('Post', backref='user', cascade="delete")
 
     #creating this representative function 
     #if there is an error i will be able to
@@ -65,7 +66,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(400), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     location = db.Column(db.String(100), nullable=True)
     language = db.Column(db.String(100), nullable=True)
 
@@ -240,13 +241,10 @@ def profile(id):
 
     date = datetime.now()
     
-    
-    
     posts = db.session.query(Post). \
         order_by(Post.date_created.desc()). \
         filter(Post.user_id == id).all()
         
-
     user = db.session.query(User). \
         filter(User.id == id).first()
 
@@ -255,22 +253,124 @@ def profile(id):
 
     age = (date.month + ((date.year - yyyy)*12) + mm) // 12
 
-
     return render_template(
         'profile.html', 
         posts=posts,
         date=date,
         user=user,
         age=age)
-    
-    # else:
-    #     return render_template(
-    #         'profile.html')
 
+
+@app.route('/update-user/<int:id>', methods=['GET', 'POST'])
+@login_required
+def update_user(id):
+    user = User.query.get_or_404(id)
+
+    if request.method == 'POST':
+
+        if request.method == 'POST':
+            first_name = request.form['fname']
+            last_name = request.form['lname']
+            email = request.form['mail']
+            current_password = request.form['current_pwd']
+            password = request.form['pwd']
+            password2 = request.form['pwd2']
+            dob = request.form['age']
+            
+            # profile_pic = request.files['profile_pic']
+
+            #validating the data before pushing them to database to create a user profile
+            if len(first_name) > 50:
+                flash('First name must be less than 50 characters.', category='error')
+            elif len(first_name) < 2:
+                flash('First name must be greater than 2 characters.', category='error')
+            elif len(last_name) > 50:
+                flash('Last name must be less than 50 characters.', category='error')
+            elif len(last_name) < 2:
+                flash('Last name must be greater than 2 characters.', category='error')
+            elif len(email) > 50: 
+                flash('Email must be less than 50 characters.', category='error')
+            elif len(email) < 4:
+                flash('Email must be greater than 4 characters.', category='error')
+            elif not bcrypt.check_password_hash(user.password, current_password):
+                flash('Current password NOT correct', category='error')
+            elif password != password2:
+                flash('Passwords do NOT match', category='error')
+            elif len(password) < 8:
+                flash('Password must be at least 8 characters', category='error')
+            elif dob == "":
+                flash('Age must be filled', category='error')
+
+            else:
+                existing_email = User.query.filter_by(
+                    email=email).first()
+
+                if existing_email:
+                    flash("This email already exists.", category='error')
+                    return render_template(
+                    'update-user.html', 
+                    user=user)
+
+                else:
+                    hashed_pw = bcrypt.generate_password_hash(request.form['pwd'])
+
+                    user.first_name = request.form['fname'].strip()
+                    user.last_name = request.form['lname'].strip()
+                    user.email = request.form['mail'].strip()
+                    user.password = hashed_pw
+                    user.age = request.form['age'].strip()
+                    db.session.commit()
+
+                    return redirect(url_for('profile', id=user.id))
+
+            flash('Account not updated!', category='error')
+            return render_template(
+                    'update-user.html', 
+                    user=user)
+
+    else:
+        return render_template(
+            'update-user.html', 
+            user=user)
+
+
+@app.route('/delete-user/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_user(id):
+    user = User.query.get_or_404(id)
+    
+    if request.method == 'POST':
+
+        if user:
+
+            password = request.form['pwd']
+
+            if bcrypt.check_password_hash(user.password, password):
+
+            #3 rows of code below is from https://www.youtube.com/watch?v=Z1RJmh_OqeA
+                db.session.delete(user)
+                db.session.commit()
+                flash('User deleted', category='success')
+                return redirect(url_for('index'))
+
+            else:
+                flash("Password not correct", category='error')
+                return redirect(url_for('profile', id=user.id))
+
+
+        else:
+            flash("User not exist", category='error')
+            return redirect(url_for('index'))
+
+    else:
+        return render_template(
+            'delete-user.html',
+            user=user)
+    
 
 @app.route('/update-post/<int:id>', methods=['GET', 'POST'])
 @login_required
-def update(id):
+def update_post(id):
     posts = Post.query.get_or_404(id)
 
     if request.method == 'POST':
@@ -319,11 +419,12 @@ def delete(id):
         db.session.delete(posts_to_delete)
         db.session.commit()
         flash('Ad deleted', category='success')
-        return redirect(url_for('drivers'))
+        return redirect(url_for('profile', id=posts_to_delete.user_id))
 
     else:
         flash("Ad not exist", category='error')
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile', id=posts_to_delete.user_id))
+
 
 
 @app.route('/post/<int:id>')
