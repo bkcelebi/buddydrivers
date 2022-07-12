@@ -36,7 +36,7 @@
                         <div class="col-lg-4">
                             <div class="card mb-4">
                                 <div class="card-body text-center">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                                    <img src="../static/profile_pics/default.png" alt="avatar"
                                         class="rounded-circle img-fluid" style="width: 150px;">       
 
                                     <div class="d-flex justify-content-center">
@@ -121,7 +121,7 @@
                     <div class="col-lg-4">
                         <div class="card mb-4">
                             <div class="card-body text-center">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                                <img src="../static/profile_pics/default.png" alt="avatar"
                                     class="rounded-circle img-fluid" style="width: 150px;">       
                                 
                                 <div class="d-flex justify-content-center">
@@ -165,7 +165,14 @@
                                         <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between">
-                                                <h5 class="card-title">{{ post.user.first_name }}</h5>
+                                                <a 
+                                                style="margin-bottom: 2%;" 
+                                                href="/profile/{{post.user.id}}">
+                                                    <div class="d-flex">
+                                                        <img class="rounded-circle img-fluid" src="../static/profile_pics/default.png" alt="avatar" style="width:30px">
+                                                        <h5 style="margin-left: 10%; margin-top: 15%;" class="card-title">{{ post.user.first_name }}</h5>
+                                                    </div>
+                                                </a>
                                                 {% if current_user.id == post.user.id %}
                                                 <div class="dropdown">
                                                     <i class="bi bi-gear-fill dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>

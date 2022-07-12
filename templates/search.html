@@ -27,9 +27,17 @@
                             <div class="card">
                                 <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
                                 <div class="card-body">
-                                    <a href="/profile/{{post.user.id}}">
-                                        <h5 class="card-title">{{ post.user.first_name }}</h5>
-                                    </a>
+                                    <div class="d-flex justify-content-between">
+                                        <a 
+                                        style="margin-bottom: 2%;" 
+                                        href="/profile/{{post.user.id}}">
+                                            <div class="d-flex">
+                                                <img class="rounded-circle img-fluid" src="../static/profile_pics/default.png" alt="avatar" style="width:30px">
+                                                <h5 style="margin-left: 10%; margin-top: 15%;" class="card-title">{{ post.user.first_name }}</h5>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    
                                     <p class="card-text">
                                         {% if post.content | length > 200  %}
                                             {{ post.content[0:200] }} ...
@@ -123,9 +131,16 @@
                             <div class="card">
                                 <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
                                 <div class="card-body">
-                                    <a href="/profile/{{post.user.id}}">
-                                        <h5 class="card-title">{{ post.user.first_name }}</h5>
-                                    </a>
+                                    <div class="d-flex justify-content-between">
+                                        <a 
+                                        style="margin-bottom: 2%;" 
+                                        href="/profile/{{post.user.id}}">
+                                            <div class="d-flex">
+                                                <img class="rounded-circle img-fluid" src="../static/profile_pics/default.png" alt="avatar" style="width:30px">
+                                                <h5 style="margin-left: 10%; margin-top: 15%;" class="card-title">{{ post.user.first_name }}</h5>
+                                            </div>
+                                        </a>
+                                    </div>
                                     <p class="card-text">
                                         {% if post.content | length > 200  %}
                                             {{ post.content[0:200] }} ...

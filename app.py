@@ -277,6 +277,7 @@ def filtered_result():
 
     else:
         return redirect(url_for('drivers'))
+        
 
 @app.route('/profile/<int:id>', methods=['GET'])
 # @login_required

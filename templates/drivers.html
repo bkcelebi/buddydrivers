@@ -93,8 +93,13 @@
                                 <div class="card-body">
 
                                     <div class="d-flex justify-content-between">
-                                        <a href="/profile/{{post.user.id}}">
-                                            <h5 class="card-title">{{ post.user.first_name }}</h5>
+                                        <a 
+                                        style="margin-bottom: 2%;" 
+                                        href="/profile/{{post.user.id}}">
+                                            <div class="d-flex">
+                                                <img class="rounded-circle img-fluid" src="../static/profile_pics/default.png" alt="avatar" style="width:30px">
+                                                <h5 style="margin-left: 10%; margin-top: 15%;" class="card-title">{{ post.user.first_name }}</h5>
+                                            </div>
                                         </a>
                                         {% if current_user.id == post.user.id %}
                                         <div class="dropdown">
@@ -195,10 +200,72 @@
             <div class="container text-center">
                 <br>
                 <div class="row justify-content-between">     
-                    <div class="col-2 sidenav position-relative">
-                        <p>ADS</p>
-                        <p>ADS</p>
-                    </div>
+                    
+                    <div class="col-12  col-lg-3">
+                        <div class="card mb-4">
+                            <h5 style="margin-bottom: 2%; margin-top: 5%;">Filter by</h5>
+                            
+                            <div class="card-body">
+                   
+                                <form action="/filtered-result" method="POST" >
+
+                                    <span>Location</span><br><br>
+
+                                    <select name="location"
+                                    class="form-group form-select mb-3 form-control" 
+                                    aria-label="Default select example">
+                                        <option value="any">Any</option>
+                                        <option value="Antrim">Antrim</option>
+                                        <option value="Armagh">Armagh</option>
+                                        <option value="Carlow">Carlow</option>
+                                        <option value="Cavan">Cavan</option>
+                                        <option value="Clare">Clare</option>
+                                        <option value="Cork">Cork</option>
+                                        <option value="Derry">Derry</option>
+                                        <option value="Donegal">Donegal</option>
+                                        <option value="Down">Down</option>
+                                        <option value="Dublin">Dublin</option>
+                                        <option value="Fermanagh">Fermanagh</option>
+                                        <option value="Galway">Galway</option>
+                                        <option value="Kerry">Kerry</option>
+                                        <option value="Kildare">Kildare</option>
+                                        <option value="Kilkenny">Kilkenny</option>
+                                        <option value="Laois">Laois</option>
+                                        <option value="Leitrim">Leitrim</option>
+                                        <option value="Limerick">Limerick</option>
+                                        <option value="Longford">Longford</option>
+                                        <option value="Louth">Louth</option>
+                                        <option value="Mayo">Mayo</option>
+                                        <option value="Meath">Meath</option>
+                                        <option value="Monaghan">Monaghan</option>
+                                        <option value="Offaly">Offaly</option>
+                                        <option value="Roscommon">Roscommon</option>
+                                        <option value="Sligo">Sligo</option>
+                                        <option value="Tipperary">Tipperary</option>
+                                        <option value="Tyrone">Tyrone</option>
+                                        <option value="Waterford">Waterford</option>
+                                        <option value="Westmeath">Westmeath</option>
+                                        <option value="Wexford">Wexford</option>
+                                        <option value="Wicklow">Wicklow</option>
+                                    </select>
+                
+                                    <div class="form-group mb-3">
+                                        <label for="lang">Language</label>
+                                        <input class="form-control" 
+                                        type="text" 
+                                        id="lang" 
+                                        name="lang" 
+                                        placeholder="Any"
+                                        >
+                                    </div>
+                    
+                                    <input class="btn btn-outline-dark" type="submit" value="Filter"></input>
+                                </form>
+                                   
+                            </div>
+                        </div>
+
+                    </div> 
                                 
                     <div class="col-sm-6  col-lg-6 text-left">
                         {% for post in posts.items %}
@@ -206,8 +273,13 @@
                                 <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
-                                        <a href="/profile/{{post.user.id}}">
-                                            <h5 class="card-title">{{ post.user.first_name }}</h5>
+                                        <a 
+                                        style="margin-bottom: 2%;" 
+                                        href="/profile/{{post.user.id}}">
+                                            <div class="d-flex">
+                                                <img class="rounded-circle img-fluid" src="../static/profile_pics/default.png" alt="avatar" style="width:30px">
+                                                <h5 style="margin-left: 10%; margin-top: 15%;" class="card-title">{{ post.user.first_name }}</h5>
+                                            </div>
                                         </a>
                                         {% if current_user.id == post.user.id %}
                                         <div class="dropdown">
