@@ -7,11 +7,52 @@
 {% block body %}
 
     {% if current_user.is_authenticated %}
+    
         {% if search == "" %}
-            <h3 style="margin-top: 2%;" align="center">No result found</h3> 
 
-        {% elif result == [] %}
-            <h3 style="margin-top: 2%;" align="center">No result found for {{search}}</h3>
+        <div style="margin-top: 2%;" class="container text-center">
+            <br>
+            <div style="margin-bottom: 25%;" class="row justify-content-between">     
+                <div class="col-2 sidenav position-relative">
+                    <p>ADS</p>
+                    <p>ADS</p>
+                </div>
+                            
+                <div class="col-sm-6  col-lg-6 text-left">
+                    <h3 style="margin-top: 15%;" align="center">No result found</h3> 
+                </div>               
+            
+                <div class="col-2 sidenav position-relative">
+                    <p>ADS</p>
+                    <p>ADS</p>
+                </div>
+
+            </div>
+            <br>
+        </div> 
+
+        {% elif result.items == [] %}
+
+        <div style="margin-top: 2%;" class="container text-center">
+            <br>
+            <div style="margin-bottom: 25%;" class="row justify-content-between">     
+                <div class="col-2 sidenav position-relative">
+                    <p>ADS</p>
+                    <p>ADS</p>
+                </div>
+                            
+                <div class="col-sm-6  col-lg-6 text-left">
+                    <h3 style="margin-top: 15%;" align="center">No result found for {{search}}</h3>
+                </div>               
+            
+                <div class="col-2 sidenav position-relative">
+                    <p>ADS</p>
+                    <p>ADS</p>
+                </div>
+
+            </div>
+            <br>
+        </div> 
             
         {% else %}
             <div class="container text-center">
@@ -110,12 +151,51 @@
         
     {% else %}
         
-      
         {% if search == "" %}
-            <h3 style="margin-top: 2%;" align="center">No results found</h3> 
-        
-        {% elif result == [] %}
-            <h3 style="margin-top: 2%;" align="center">No results found for {{search}}</h3>
+
+        <div style="margin-top: 2%;" class="container text-center">
+            <br>
+            <div style="margin-bottom: 25%;" class="row justify-content-between">     
+                <div class="col-2 sidenav position-relative">
+                    <p>ADS</p>
+                    <p>ADS</p>
+                </div>
+                            
+                <div class="col-sm-6  col-lg-6 text-left">
+                    <h3 style="margin-top: 15%;" align="center">No result found</h3> 
+                </div>               
+            
+                <div class="col-2 sidenav position-relative">
+                    <p>ADS</p>
+                    <p>ADS</p>
+                </div>
+
+            </div>
+            <br>
+        </div> 
+
+        {% elif result.items == [] %}
+
+        <div style="margin-top: 2%;" class="container text-center">
+            <br>
+            <div style="margin-bottom: 25%;" class="row justify-content-between">     
+                <div class="col-2 sidenav position-relative">
+                    <p>ADS</p>
+                    <p>ADS</p>
+                </div>
+                            
+                <div class="col-sm-6  col-lg-6 text-left">
+                    <h3 style="margin-top: 15%;" align="center">No result found for {{search}}</h3>
+                </div>               
+            
+                <div class="col-2 sidenav position-relative">
+                    <p>ADS</p>
+                    <p>ADS</p>
+                </div>
+
+            </div>
+            <br>
+        </div> 
             
         {% else %}
             <div class="container text-center">

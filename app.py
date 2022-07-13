@@ -1,5 +1,6 @@
 #importing the necessary packages and libraries for the app
 
+from operator import and_
 from tkinter import CASCADE
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
@@ -221,7 +222,6 @@ def search():
     result = db.session.query(Post, User).join(User). \
             order_by(Post.date_created.desc()). \
             filter((User.first_name.ilike(f'%{search}%')) | \
-                Post.content.ilike(f'%{search}%') | \
                 Post.language.ilike(f'%{search}%') | \
                 Post.location.ilike(f'%{search}%')) . \
                 paginate(page=page, per_page=5) 
@@ -244,7 +244,8 @@ def filtered_result():
             language = request.form['lang'].strip()
 
             result = db.session.query(Post). \
-                    filter_by(Post.language.like(language))
+                order_by(Post.date_created.desc()). \
+                filter(Post.language.ilike(f'%{language}%'))
 
             return render_template(
                 'filtered-result.html', 
@@ -255,7 +256,8 @@ def filtered_result():
             location = request.form['location']
 
             result = db.session.query(Post). \
-                filter_by(Post.location.like(location))
+                order_by(Post.date_created.desc()). \
+                filter(Post.language.ilike(f'%{location}%'))
 
             return render_template(
                 'filtered-result.html', 
@@ -267,8 +269,10 @@ def filtered_result():
             language = request.form['lang'].strip()
 
             result = db.session.query(Post). \
-                    filter_by(Post.location.like(location)). \
-                    filter_by(Post.language.like(language))
+                    filter(and_(
+                        Post.language.like(location),
+                        Post.language.like(language)
+                        ))
 
             return render_template(
                 'filtered-result.html', 
