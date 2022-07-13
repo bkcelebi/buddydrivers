@@ -128,8 +128,7 @@
 
         {% block body %}{% endblock %}
 
-
-        <br><br>
+        <br>
     <!-- Footer -->
 <footer class="bg-dark text-center text-white">
     <!-- Grid container -->
@@ -167,49 +166,12 @@
         ></a> -->
       </section>
       <!-- Section: Social media -->
-  
-      <!-- Section: Form -->
-      <section class="">
-        <form action="">
-          <!--Grid row-->
-          <div class="row d-flex justify-content-center">
-            <!--Grid column-->
-            <div class="col-auto">
-              <p class="pt-2">
-                <strong>Sign up for our newsletter</strong>
-              </p>
-            </div>
-            <!--Grid column-->
-  
-            <!--Grid column-->
-            <div class="col-md-5 col-12">
-              <!-- Email input -->
-              <div class="form-outline form-white mb-4">
-                <input type="email" id="form5Example21" class="form-control" placeholder="Email address"/>
-              </div>
-            </div>
-            <!--Grid column-->
-  
-            <!--Grid column-->
-            <div class="col-auto">
-              <!-- Submit button -->
-              <button type="submit" class="btn btn-outline-success mb-4">
-                Subscribe
-              </button>
-            </div>
-            <!--Grid column-->
-          </div>
-          <!--Grid row-->
-        </form>
-      </section>
-      <!-- Section: Form -->
+
   
       <!-- Section: Text -->
       <section class="mb-4">
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio earum
-          repellat quaerat voluptatibus placeat nam, commodi optio pariatur est quia magnam
-          eum harum corrupti dicta, aliquam sequi voluptate quas.
+          Do you have a learner permit? Are you getting your essential driving lessons or already completed them? Do you need more practice? You are at the correct place. View the buddydrivers to find someone to practice with.
         </p>
       </section>
       <!-- Section: Text -->
@@ -224,16 +186,10 @@
   
             <ul class="list-unstyled mb-0">
               <li>
-                <a href="#!" class="text-white">Link 1</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 2</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 3</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 4</a>
+                <a style="color: white;" href="{{url_for('index')}}">
+                  <i class="bi bi-house"></i>
+                  Home
+                </a>
               </li>
             </ul>
           </div>
@@ -244,18 +200,19 @@
             <h5 class="text-uppercase">Links</h5>
   
             <ul class="list-unstyled mb-0">
-              <li>
-                <a href="#!" class="text-white">Link 1</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 2</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 3</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 4</a>
-              </li>
+              <li class="nav-item">
+                {% if current_user.is_authenticated %}
+                  <a style="color: white;" class="nav-link" href="/profile/{{current_user.id}}">
+                    <i class="bi bi-person"></i>
+                    Profile
+                  </a>
+                {% else %}
+                  <a style="color: white;" class="nav-link" href="/login">
+                    <i class="bi bi-person"></i>
+                    Profile
+                  </a>
+                {% endif %}
+                </li>
             </ul>
           </div>
           <!--Grid column-->
@@ -265,18 +222,13 @@
             <h5 class="text-uppercase">Links</h5>
   
             <ul class="list-unstyled mb-0">
-              <li>
-                <a href="#!" class="text-white">Link 1</a>
+              <li class="nav-item">
+                <a style="color: white;" class="nav-link" href="{{url_for('drivers')}}">
+                  <i class="bi bi-speedometer2"></i>
+                  Drivers
+                </a>
               </li>
-              <li>
-                <a href="#!" class="text-white">Link 2</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 3</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 4</a>
-              </li>
+              
             </ul>
           </div>
           <!--Grid column-->
@@ -286,17 +238,11 @@
             <h5 class="text-uppercase">Links</h5>
   
             <ul class="list-unstyled mb-0">
-              <li>
-                <a href="#!" class="text-white">Link 1</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 2</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 3</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 4</a>
+              <li class="nav-item">
+                <a style="color: white;" class="nav-link" href="{{url_for('create')}}">
+                  <i class="bi bi-megaphone"></i>
+                  Create Ad
+                </a>
               </li>
             </ul>
           </div>

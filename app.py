@@ -352,10 +352,27 @@ def update_user(id):
                     email=email).first()
 
                 if existing_email:
-                    flash("This email already exists.", category='error')
-                    return render_template(
-                    'update-user.html', 
-                    user=user)
+
+                    if user.email == email:
+                        hashed_pw = bcrypt.generate_password_hash(request.form['pwd'])
+
+                        user.first_name = request.form['fname'].strip()
+                        user.last_name = request.form['lname'].strip()
+                        user.email = request.form['mail'].strip()
+                        user.password = hashed_pw
+                        user.age = request.form['age'].strip()
+                        db.session.commit()
+                        flash("Account info updated", category='success')
+                        return redirect(url_for('profile', id=user.id))
+                        
+
+                    else:
+                        flash("This email already exists.", category='error')
+                        return render_template(
+                        'update-user.html', 
+                        user=user)
+                        
+                        
 
                 else:
                     hashed_pw = bcrypt.generate_password_hash(request.form['pwd'])
@@ -366,8 +383,9 @@ def update_user(id):
                     user.password = hashed_pw
                     user.age = request.form['age'].strip()
                     db.session.commit()
-
+                    flash("Account info updated", category='success')
                     return redirect(url_for('profile', id=user.id))
+                        
 
             flash('Account not updated!', category='error')
             return render_template(
