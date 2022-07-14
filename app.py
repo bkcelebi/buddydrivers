@@ -221,7 +221,7 @@ def search():
 
     result = db.session.query(Post, User).join(User). \
             order_by(Post.date_created.desc()). \
-            filter((User.first_name.ilike(f'%{search}%')) | \
+            filter(User.first_name.ilike(f'%{search}%') | \
                 Post.language.ilike(f'%{search}%') | \
                 Post.location.ilike(f'%{search}%')) . \
                 paginate(page=page, per_page=5) 
@@ -240,39 +240,43 @@ def filtered_result():
 
     if request.method == 'POST':
 
-        if request.form['location'] == 'any':
+        if request.form['location'] == 'any' and request.form['lang'].strip() != '':
             language = request.form['lang'].strip()
 
             result = db.session.query(Post). \
                 order_by(Post.date_created.desc()). \
-                filter(Post.language.ilike(f'%{language}%'))
+                filter(Post.language.ilike(f'%{language}%')) \
+                .all()
 
             return render_template(
                 'filtered-result.html', 
                 result=result,
                 date=date)
 
-        elif request.form['lang'].strip() == '':
+        elif request.form['location'] != 'any' and request.form['lang'].strip() == '':
             location = request.form['location']
 
             result = db.session.query(Post). \
                 order_by(Post.date_created.desc()). \
-                filter(Post.language.ilike(f'%{location}%'))
+                filter(Post.location == location).all()
 
             return render_template(
                 'filtered-result.html', 
                 result=result,
                 date=date)
+
+        elif request.form['location'] == 'any' and request.form['lang'].strip() == '':
+            return redirect(url_for('drivers'))
         
         else:
             location = request.form['location']
             language = request.form['lang'].strip()
 
             result = db.session.query(Post). \
-                    filter(and_(
-                        Post.language.like(location),
-                        Post.language.like(language)
-                        ))
+                order_by(Post.date_created.desc()). \
+                filter(Post.location.like(f'%{location}%')). \
+                filter(Post.language.ilike(f'%{language}%')). \
+                    all()
 
             return render_template(
                 'filtered-result.html', 
