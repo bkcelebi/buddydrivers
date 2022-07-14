@@ -9,57 +9,67 @@
 
     {% if search == "" %}
 
-    <div style="margin-top: 2%;" class="container text-center">
-        <br>
-        <div style="margin-bottom: 25%;" class="row justify-content-between">     
-            <div class="col-2 sidenav position-relative">
-                <p>ADS</p>
-                <p>ADS</p>
-            </div>
-                        
-            <div class="col-sm-6  col-lg-6 text-left">
-                <h3 style="margin-top: 15%;" align="center">No result found</h3> 
-            </div>               
-        
-            <div class="col-2 sidenav position-relative">
-                <p>ADS</p>
-                <p>ADS</p>
-            </div>
+        <div style="margin-top: 2%;" class="container text-center">
+            <br>
+            <div style="margin-bottom: 5%;" class="row justify-content-between">     
+                <div 
+                style="margin-top: 2%;
+                margin-left: -10%;" 
+                class="col-2 sidenav">
+                    <img src="../static/ads/default.jpeg" alt="ads">
+                </div>
+                            
+                <div class="col-sm-6  col-lg-6 text-left">
+                    <h3 style="margin-top: 15%;" align="center">No result found</h3> 
+                </div>               
+            
+                <div 
+                style="margin-top: 2%;
+                margin-right: -10%;" 
+                class="col-2 sidenav">
+                    <img src="../static/ads/default_3.jpeg" alt="ads">
+                </div>
 
-        </div>
-        <br>
-    </div> 
+            </div>
+            <br>
+        </div> 
 
     {% elif result.items == [] %}
 
-    <div style="margin-top: 2%;" class="container text-center">
-        <br>
-        <div style="margin-bottom: 25%;" class="row justify-content-between">     
-            <div class="col-2 sidenav position-relative">
-                <p>ADS</p>
-                <p>ADS</p>
-            </div>
-                        
-            <div class="col-sm-6  col-lg-6 text-left">
-                <h3 style="margin-top: 15%;" align="center">No result found for {{search}}</h3>
-            </div>               
-        
-            <div class="col-2 sidenav position-relative">
-                <p>ADS</p>
-                <p>ADS</p>
-            </div>
+        <div style="margin-top: 2%;" class="container text-center">
+            <br>
+            <div style="margin-bottom: 5%;" class="row justify-content-between">     
+                <div 
+                style="margin-top: 2%;
+                margin-left: -10%;" 
+                class="col-2 sidenav">
+                    <img src="../static/ads/default.jpeg" alt="ads">
+                </div>
+                            
+                <div class="col-sm-6  col-lg-6 text-left">
+                    <h3 style="margin-top: 15%;" align="center">No result found for {{search}}</h3>
+                </div>               
+            
+                <div 
+                style="margin-top: 2%;
+                margin-right: -10%;" 
+                class="col-2 sidenav">
+                    <img src="../static/ads/default_3.jpeg" alt="ads">
+                </div>
 
-        </div>
-        <br>
-    </div> 
-        
+            </div>
+            <br>
+        </div> 
+            
     {% else %}
         <div class="container text-center">
             <br>
             <div class="row justify-content-between">     
-                <div class="col-2 sidenav position-relative">
-                    <p>ADS</p>
-                    <p>ADS</p>
+                <div 
+                style="margin-top: 2%;
+                margin-left: -10%;" 
+                class="col-2 sidenav">
+                    <img src="../static/ads/default.jpeg" alt="ads">
                 </div>
                             
                 <div class="col-sm-6  col-lg-6 text-left">
@@ -138,9 +148,11 @@
                     {% endfor %}
                 </div>               
             
-                <div class="col-2 sidenav position-relative">
-                    <p>ADS</p>
-                    <p>ADS</p>
+                <div 
+                style="margin-top: 2%;
+                margin-right: -10%;" 
+                class="col-2 sidenav">
+                    <img src="../static/ads/default_3.jpeg" alt="ads">
                 </div>
 
             </div>
@@ -154,6 +166,5 @@
         </div> 
     {% endif %}
         
-    
-    
+
 {% endblock %}
