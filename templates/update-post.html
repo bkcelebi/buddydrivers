@@ -31,7 +31,7 @@
             
                     <div class="d-flex justify-content-center">
                         <!-- form design is from bootstrap https://getbootstrap.com/docs/5.0/forms/overview/-->
-                        <form action="/update-post/{{posts.id}}" method="POST" >
+                        <form action="/update-post/{{posts.id}}" method="POST" enctype="multipart/form-data">
                                 
                             <div class="form-row">
             
@@ -96,6 +96,25 @@
                                     <label for="content">Content</label><br>
                                     <textarea id="content" name="content" rows="5" cols="50">{{posts.content}}
                                     </textarea><br>
+                                </div>
+            
+                            </div>
+
+                            <div class="form-row">
+                                <span style="margin-left: 1%;">Post Photo</span><br>
+                                <div 
+                                style="margin-top: 2%; margin-right: 1%; margin-left: 1%;" 
+                                class="input-group row-md-6 mb-3">
+                                    <input 
+                                    type="file" 
+                                    class="custom-file-input" 
+                                    id="post_pic" 
+                                    name="post_pic"
+                                    accept=".jpg, .jpeg, .png"
+                                    required>
+                                    <label class="custom-file-label" for="post_pic">                                    
+                                        {{post_picture}}
+                                    </label>
                                 </div>
             
                             </div>

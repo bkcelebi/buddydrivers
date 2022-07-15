@@ -27,7 +27,7 @@ bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SECRET_KEY'] = 'secretkey'
 
-UPLOAD_FOLDER = 'static/profile_pics/'
+UPLOAD_FOLDER = 'static/images/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #creating the login manager
@@ -68,10 +68,9 @@ class Post(db.Model):
     content = db.Column(db.String(400), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    location = db.Column(db.String(100), nullable=True)
-    language = db.Column(db.String(100), nullable=True)
-
-    # post_pic =db.Column(db.String(), nullable=True)
+    location = db.Column(db.String(100), nullable=False)
+    language = db.Column(db.String(100), nullable=False)
+    post_pic =db.Column(db.String(), nullable=False)
 
     #creating this representative function 
     #if there is an error i will be able to
@@ -487,20 +486,43 @@ def update_post(id):
             return render_template(
             'update-post.html', 
             posts=posts)
+
+        elif request.files['post_pic'] == '':
+            flash('Post Photo cannot be empty', category='error')
+            return render_template(
+            'update-post.html', 
+            posts=posts)
+
         else:
+            post_pic = request.files['post_pic']
+            #grab image name
+            post_pic_filename = secure_filename(post_pic.filename)
+            # set uuid
+            post_pic_name = str(uuid.uuid1()) + "_" + post_pic_filename
+            # save the image
+            post_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], post_pic_name))
+            # Change from image to string to save
+            #it to db
+            post_pic = post_pic_name
+
             #3 rows of code below is from https://www.youtube.com/watch?v=Z1RJmh_OqeA
             posts.content = request.form['content'].strip()
             posts.location = request.form['location']
             posts.language = request.form['lang'].strip()
+            posts.post_pic = post_pic
             db.session.commit()
             flash('Ad updated', category='success')
             return redirect(url_for('drivers'))
             
 
     else:
+        post_picture = posts.post_pic
+        post_picture = post_picture.split("_")
+        post_picture = post_picture[1]
         return render_template(
             'update-post.html', 
-            posts=posts)
+            posts=posts,
+            post_picture=post_picture)
 
 
 @app.route('/delete-post/<int:id>')
@@ -542,6 +564,7 @@ def create():
         content = request.form['content']
         language = request.form['lang']
         location = request.form['location']
+        post_pic = request.files['post_pic']
 
         #if the content is empty
         if len(content) < 1:
@@ -550,14 +573,28 @@ def create():
             flash("Language cannot be empty!", category='error')
         elif location.strip() == '':
             flash("Please choose your county", category='error')
+        elif post_pic == '':
+            flash("Please select a photo for your post", category='error')
             
         else:
+
+            #grab image name
+            post_pic_filename = secure_filename(post_pic.filename)
+            # set uuid
+            post_pic_name = str(uuid.uuid1()) + "_" + post_pic_filename
+            # save the image
+            post_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], post_pic_name))
+            # Change from image to string to save
+            #it to db
+            post_pic = post_pic_name
+
             #passing required info to create a new task
             new_post = Post(
                 content=content, 
                 user_id=current_user.id,
                 location=location,
-                language=language
+                language=language,
+                post_pic = post_pic
                 )
 
 

@@ -116,7 +116,7 @@
                 <div class="col-sm-12  col-lg-6 text-left">
                     {% for post in posts.items %}
                         <div class="card">
-                            <img class="card-img-top" src="https://images.pexels.com/photos/1386649/pexels-photo-1386649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
+                            <img class="card-img-top" src="{{url_for('static', filename='images/' + post.post_pic)}}" alt="Card image cap">
                             <div class="card-body">
 
                                 <div class="d-flex justify-content-between">
@@ -124,7 +124,7 @@
                                     style="margin-bottom: 2%;" 
                                     href="/profile/{{post.user.id}}">
                                         <div class="d-flex">
-                                            <img class=" img-fluid" src="{{url_for('static', filename='profile_pics/' + post.user.profile_pic)}}" alt="thumbnail" style="width:30px">
+                                            <img class=" img-fluid" src="{{url_for('static', filename='images/' + post.user.profile_pic)}}" alt="thumbnail" style="width:40px; height:40px;">
                                             <h5 style="margin-left: 10%; margin-top: 15%;" class="card-title">{{ post.user.first_name }}</h5>
                                         </div>
                                     </a>
