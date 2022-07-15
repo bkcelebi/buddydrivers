@@ -420,9 +420,13 @@ def update_user(id):
                     user=user)
 
     else:
+        pic = user.profile_pic
+        pic = pic.split("_")
+        pic = pic[1]
         return render_template(
             'update-user.html', 
-            user=user)
+            user=user,
+            pic=pic)
 
 
 @app.route('/delete-user/<int:id>', methods=['GET', 'POST'])
