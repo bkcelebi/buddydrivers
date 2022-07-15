@@ -8,9 +8,36 @@
 
     
     {% if posts.items|length < 1 %}
-        <div class="container">
-            <h5 style="margin-top: 5%; margin-bottom: 300px;" align="center">There are no ads yet. <a href="{{url_for('create')}}">Create now</a></h5>     
+
+    <div class="container text-center">
+        <br>
+        <div class="row justify-content-between">     
+            <div 
+            style="margin-top: 2%;
+            margin-left: -10%;" 
+            class="col-2 sidenav">
+                <img src="../static/ads/default.jpeg" alt="ads">
+            </div>
+                        
+            <div class="col-sm-6  col-lg-6 text-left">
+                    
+                <div class="container">
+                    <h5 style="margin-top: 25%; margin-bottom: 300px;" align="center">There are no ads yet. <a href="{{url_for('create')}}">Create now</a></h5>     
+                </div>
+                
+            </div>
+
+        <div 
+        style="margin-top: 2%;
+        margin-right: -10%;" 
+        class="col-2 sidenav">
+            <img src="../static/ads/default_3.jpeg" alt="ads">
         </div>
+
+
+        </div>
+
+    </div>
         
         {% else %}
 
@@ -97,7 +124,7 @@
                                     style="margin-bottom: 2%;" 
                                     href="/profile/{{post.user.id}}">
                                         <div class="d-flex">
-                                            <img class="rounded-circle img-fluid" src="../static/profile_pics/default.png" alt="avatar" style="width:30px">
+                                            <img class=" img-fluid" src="{{url_for('static', filename='profile_pics/' + post.user.profile_pic)}}" alt="thumbnail" style="width:30px">
                                             <h5 style="margin-left: 10%; margin-top: 15%;" class="card-title">{{ post.user.first_name }}</h5>
                                         </div>
                                     </a>

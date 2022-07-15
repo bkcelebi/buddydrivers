@@ -1,12 +1,14 @@
 #importing the necessary packages and libraries for the app
 
-from operator import and_
-from tkinter import CASCADE
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_bcrypt import Bcrypt
 from datetime import datetime
+from werkzeug.utils import secure_filename
+import uuid as uuid
+import os
+
 
 
 #In this app, Flask documentation, sqlalchemy documentation and 
@@ -24,6 +26,9 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SECRET_KEY'] = 'secretkey'
+
+UPLOAD_FOLDER = 'static/profile_pics/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #creating the login manager
 login_manager = LoginManager()
@@ -45,13 +50,8 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(80), nullable=False)
     age = db.Column(db.Integer, nullable=False)
-    
-    #create the ones below
-    # profile_pic =db.Column(db.String(30), nullable=False, default='default.png')
+    profile_pic = db.Column(db.String(), nullable=False)  
 
-    
-    
-    
     posts = db.relationship('Post', backref='user', cascade="delete")
 
     #creating this representative function 
@@ -96,8 +96,7 @@ def signup():
         password = request.form['pwd']
         password2 = request.form['pwd2']
         dob = request.form['age']
-        
-        # profile_pic = request.files['profile_pic']
+        profile_pic = request.files['profile_pic']
 
         #validating the data before pushing them to database to create a user profile
         if len(first_name) > 50:
@@ -118,7 +117,9 @@ def signup():
             flash('Password must be at least 8 characters', category='error')
         elif dob == "":
             flash('Age must be filled', category='error')
-        
+        elif profile_pic == "":
+            flash('Profile photo is required', category='error')
+
         else:
             #checking if the email is used already
             existing_email = User.query.filter_by(
@@ -129,15 +130,25 @@ def signup():
 
             #if email does not exist hashing the pw and creating the user profile
             else:
+
+                profile_pic = request.files['profile_pic']
+                #grab image name
+                pic_filename = secure_filename(profile_pic.filename)
+                # set uuid
+                pic_name = str(uuid.uuid1()) + "_" + pic_filename
+                # save the image
+                profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+                # Change from image to string to save
+                #it to db
+                profile_pic = pic_name
+
                 #4 rows of code below is from https://www.youtube.com/watch?v=71EU8gnZqZQ&t=1442s
                 hashed_pw = bcrypt.generate_password_hash(password)
-            
 
                 new_user = User(email=email, first_name=first_name, 
-                password = hashed_pw ,last_name=last_name, age=dob)
-                #profile_pic=profile_pic) 
+                password = hashed_pw ,last_name=last_name, age=dob,
+                profile_pic=profile_pic) 
                 
-            
                 db.session.add(new_user)
                 db.session.commit()
                 flash('Account created!', category='success')
@@ -291,8 +302,6 @@ def filtered_result():
 # @login_required
 def profile(id):
 
-    # profile_pic = url_for('static', filename='profile_pics/' + current_user.profile_pic )
-
     date = datetime.now()
     
     posts = db.session.query(Post). \
@@ -329,9 +338,8 @@ def update_user(id):
             current_password = request.form['current_pwd']
             password = request.form['pwd']
             password2 = request.form['pwd2']
-            dob = request.form['age']
-            
-            # profile_pic = request.files['profile_pic']
+            dob = request.form['age']           
+            profile_pic = request.files['profile_pic']
 
             #validating the data before pushing them to database to create a user profile
             if len(first_name) > 50:
@@ -364,11 +372,22 @@ def update_user(id):
                     if user.email == email:
                         hashed_pw = bcrypt.generate_password_hash(request.form['pwd'])
 
+                        #grab image name
+                        pic_filename = secure_filename(profile_pic.filename)
+                        # set uuid
+                        pic_name = str(uuid.uuid1()) + "_" + pic_filename
+                        # save the image
+                        profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+                        # Change from image to string to save
+                        #it to db
+                        profile_pic = pic_name
+
                         user.first_name = request.form['fname'].strip()
                         user.last_name = request.form['lname'].strip()
                         user.email = request.form['mail'].strip()
                         user.password = hashed_pw
                         user.age = request.form['age'].strip()
+                        user.profile_pic = profile_pic
                         db.session.commit()
                         flash("Account info updated", category='success')
                         return redirect(url_for('profile', id=user.id))

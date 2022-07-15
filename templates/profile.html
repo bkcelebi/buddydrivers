@@ -36,9 +36,8 @@
                         <div class="col-lg-4">
                             <div class="card mb-4">
                                 <div class="card-body text-center">
-                                    <img src="../static/profile_pics/default.png" alt="avatar"
-                                        class="rounded-circle img-fluid" style="width: 150px;">       
-
+                                    <img src="{{url_for('static', filename='profile_pics/' + user.profile_pic)}}" alt="profile picture"
+                                    class="img-fluid" style="width: 150px;">
                                     <div class="d-flex justify-content-center">
                                         <h5 class="my-3">{{user.first_name}} - {{age-2}}</h5>
     
@@ -121,7 +120,7 @@
                     <div class="col-lg-4">
                         <div class="card mb-4">
                             <div class="card-body text-center">
-                                <img src="../static/profile_pics/default.png" alt="avatar"
+                                <img src="{{url_for('static', filename='profile_pics/' + user.profile_pic)}}" alt="profile pic"
                                     class="rounded-circle img-fluid" style="width: 150px;">       
                                 
                                 <div class="d-flex justify-content-center">
@@ -169,7 +168,7 @@
                                                 style="margin-bottom: 2%;" 
                                                 href="/profile/{{post.user.id}}">
                                                     <div class="d-flex">
-                                                        <img class="rounded-circle img-fluid" src="../static/profile_pics/default.png" alt="avatar" style="width:30px">
+                                                        <img class="img-fluid" src="{{url_for('static', filename='profile_pics/' + user.profile_pic)}}" alt="thumbnail" style="width:30px">
                                                         <h5 style="margin-left: 10%; margin-top: 15%;" class="card-title">{{ post.user.first_name }}</h5>
                                                     </div>
                                                 </a>

@@ -16,8 +16,9 @@
             <br>
             <div class="row justify-content-between">     
                 <div 
-                style="margin-top: 2%;" 
-                class="col-2 sidenav text-left">
+                style="margin-top: 2%;
+                margin-left: -10%;" 
+                class="col-2 sidenav">
                     <img src="../static/ads/default.jpeg" alt="ads">
                 </div>
                             
@@ -28,8 +29,9 @@
                 </div>
 
             <div 
-            style="margin-top: 2%;" 
-            class="col-2 sidenav text-right">
+            style="margin-top: 2%;
+            margin-left: -10%;" 
+            class="col-2 sidenav">
                 <img src="../static/ads/default_3.jpeg" alt="ads">
             </div>
 
@@ -38,118 +40,128 @@
     
     
     {% else %}
-        <div class="container text-center">
-            <br>
-            <div class="row justify-content-between">     
-                <div 
-                style="margin-top: 2%;" 
-                class="col-2 sidenav text-left">
-                    <img src="../static/ads/default.jpeg" alt="ads">
-                </div>
-                            
-                <div class="col-sm-6  col-lg-6 text-left">
-                        
-                    <div class="container">
 
-                        <br>
-                        <h3 align="center">Sign Up</h3>
-                        <br>
-
-                        <div class="d-flex justify-content-center">
-                            <!-- form design is from bootstrap https://getbootstrap.com/docs/5.0/forms/overview/-->
-                            <form action="/signup" method="POST" enctype="multipart/form-data">
-                                
-                                <div class="form-row">
-
-                                    <div class="form-group col-md-4 mb-3">
-                                        <label for="fname">First name</label>
-                                        <input class="form-control" type="text" id="fname" name="fname" placeholder="First Name">
-                                    </div>
-
-                                    <div class="form-group col-md-4 mb-3">
-                                        <label for="lname">Last name</label>
-                                        <input class="form-control" type="text" id="lname" name="lname" placeholder="Last Name">
-                                    </div>
-
-                                    <div class="form-group col-md-4 mb-3">
-                                        <label for="mail">Email</label>
-                                        <input class="form-control" type="email" id="mail" name="mail" placeholder="Email">
-                                    </div>
-
-                                </div>
-
-                                <div class="form-row">
-                                    
-                                    <div class="form-group col-md-4 mb-3">
-                                        <label for="pwd">Password</label>
-                                        <input class="form-control" type="password" id="pwd" name="pwd" placeholder="Password">
-                                    </div>
-
-                                    <div class="form-group col-md-4 mb-3">
-                                        <label for="pwd2">Confirm Password</label>
-                                        <input class="form-control" type="password" id="pwd2" name="pwd2" placeholder="Confirm Password">
-                                    </div>
-                                
-                                </div>
-
-                                <div class="form-row">
-
-                                    <div class="form-group col-md-4 mb-3">
-                                        <label for="age">Date of Birth</label>
-                                        <input 
-                                        class="form-control" 
-                                        type="date" 
-                                        id="age" 
-                                        name="age"
-                                        >
-                                    </div>
-
-                                </div>
-
-                                <!-- <div class="form-row">
-                                    <span style="margin-left: 1%;">Profile Photo <i>(optional)</i></span><br>
-                                    <div 
-                                    style="margin-top: 2%; margin-right: 1%; margin-left: 1%;" 
-                                    class="input-group row-md-6 mb-3">
-                                        <input type="file" class="custom-file-input" id="profile_pic" name="profile_pic">
-                                        <label class="custom-file-label" for="profile_pic">Upload Profile Photo</label>
-                                    </div>
-
-                                </div> -->
-                
-
-                                <div style="margin-top: 1%;" class="form-row">
-
-                                    <div style="margin-left: 1%;" class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="T&C" name="T&C" required>
-                                    <label class="form-check-label" for="T&C">
-                                        Agree to terms and conditions
-                                    </label>
-                                    </div>
-
-                                </div>
-
-                                <br>
-                                
-                                <input class="btn btn-outline-success" type="submit" value="Register"></input>
-                            </form>
-                        </div>
-                        
-                    </div><br>
-
-                    <h5 align="center">Already have an account? <a href="{{url_for('login')}}"> Sign in!</a></h5>
-                                
-                </div>
-
+    <div class="container text-center">
+        <br>
+        <div class="row justify-content-between">     
             <div 
-            style="margin-top: 2%;" 
-            class="col-2 sidenav text-right">
-                <img src="../static/ads/default_3.jpeg" alt="ads">
+            style="
+            margin-left: -10%;" 
+            class="col-2 sidenav text-left">
+                <img src="../static/ads/default.jpeg" alt="ads">
+            </div>
+                        
+            <div class="col-sm-6  col-lg-6 text-left">
+                    
+                <div class="container">
+
+                    <br>
+                    <h3 align="center">Sign Up</h3>
+                    <br>
+
+                    <div class="d-flex justify-content-center">
+                        <!-- form design is from bootstrap https://getbootstrap.com/docs/5.0/forms/overview/-->
+                        <form action="/signup" method="POST" enctype="multipart/form-data">
+                            
+                            <div class="form-row">
+
+                                <div class="form-group col-md-4 mb-3">
+                                    <label for="fname">First name</label>
+                                    <input class="form-control" type="text" id="fname" name="fname" placeholder="First Name">
+                                </div>
+
+                                <div class="form-group col-md-4 mb-3">
+                                    <label for="lname">Last name</label>
+                                    <input class="form-control" type="text" id="lname" name="lname" placeholder="Last Name">
+                                </div>
+
+                                <div class="form-group col-md-4 mb-3">
+                                    <label for="mail">Email</label>
+                                    <input class="form-control" type="email" id="mail" name="mail" placeholder="Email">
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+                                
+                                <div class="form-group col-md-4 mb-3">
+                                    <label for="pwd">Password</label>
+                                    <input class="form-control" type="password" id="pwd" name="pwd" placeholder="Password">
+                                </div>
+
+                                <div class="form-group col-md-4 mb-3">
+                                    <label for="pwd2">Confirm Password</label>
+                                    <input class="form-control" type="password" id="pwd2" name="pwd2" placeholder="Confirm Password">
+                                </div>
+                            
+                            </div>
+
+                            <div class="form-row">
+
+                                <div class="form-group col-md-4 mb-3">
+                                    <label for="age">Date of Birth</label>
+                                    <input 
+                                    class="form-control" 
+                                    type="date" 
+                                    id="age" 
+                                    name="age"
+                                    >
+                                </div>
+
+                            </div>
+
+                            
+
+                            <div class="form-row">
+                                <span style="margin-left: 1%;">Profile Photo</span><br>
+                                <div 
+                                style="margin-top: 2%; margin-right: 1%; margin-left: 1%;" 
+                                class="input-group row-md-6 mb-3">
+                                <input 
+                                type="file" 
+                                class="custom-file-input" 
+                                id="profile_pic" 
+                                name="profile_pic"
+                                accept=".jpg, .jpeg, .png"
+                                required>
+                                <label class="custom-file-label" for="profile_pic">Upload Profile Photo</label>
+                                </div>
+            
+                            </div>
+            
+
+                            <div style="margin-top: 1%;" class="form-row">
+
+                                <div style="margin-left: 1%;" class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="T&C" name="T&C" required>
+                                <label class="form-check-label" for="T&C">
+                                    Agree to terms and conditions
+                                </label>
+                                </div>
+
+                            </div>
+
+                            <br>
+                            
+                            <input class="btn btn-outline-success" type="submit" value="Register"></input>
+                        </form>
+                    </div>
+                    
+                </div><br>
+
+                <h5 align="center">Already have an account? <a href="{{url_for('login')}}"> Sign in!</a></h5>
+                            
             </div>
 
-
+        <div 
+        style="
+        margin-right: -10%;" 
+        class="col-2 sidenav">
+            <img src="../static/ads/default_3.jpeg" alt="ads">
         </div>
 
+
+    </div>
 
     {% endif %}
 
