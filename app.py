@@ -54,6 +54,20 @@ class User(db.Model, UserMixin):
 
     posts = db.relationship('Post', backref='user', cascade="delete")
 
+    messages_sent = db.relationship('Message',
+                                    foreign_keys='Message.sender_id',
+                                    backref='author', lazy='dynamic')
+    messages_received = db.relationship('Message',
+                                        foreign_keys='Message.recipient_id',
+                                        backref='recipient', lazy='dynamic')
+    last_message_read_time = db.Column(db.DateTime)
+
+
+    def new_messages(self):
+        last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
+        return Message.query.filter_by(recipient=self).filter(
+            Message.timestamp > last_read_time).count()
+
     #creating this representative function 
     #if there is an error i will be able to
     #see the user the error coming from
@@ -77,6 +91,20 @@ class Post(db.Model):
     #see the post the error coming from
     def __repr__(self):
         return f'<Post {self.id}>'
+
+#creating message table in the database
+#and creating the sender_id and recipient_id 
+#to link this table with the parent
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Message {}>'.format(self.body)
+
 
 #home page / reception page
 @app.route('/')
@@ -608,6 +636,51 @@ def create():
 
     return render_template(
             'create.html') 
+
+
+
+@app.route('/send_message/<int:id>', methods=['GET', 'POST'])
+@login_required
+def send_message(id):
+    user = User.query.filter_by(id=id).first_or_404()
+    
+    if request.method == 'POST':
+        sms = request.form['message']
+
+        if len(sms) > 140:
+            flash('Message is too long.', category='error')
+        elif len(sms) == 0:
+            flash('Message is empty.', category='error')
+        else:
+            msg = Message(author=current_user, recipient=user,
+                      body=sms)
+            db.session.add(msg)
+            db.session.commit()
+            flash('Your message has been sent.')
+            return redirect(url_for('send_message', id=id))
+
+        return render_template('send_message.html', 
+            user=user)
+
+    return render_template('send_message.html', 
+            user=user)
+
+
+@app.route('/messages')
+@login_required
+def messages():
+    current_user.last_message_read_time = datetime.utcnow()
+    db.session.commit()
+    page = request.args.get('page', 1, type=int)
+    messages = current_user.messages_received.order_by(
+        Message.timestamp.desc()).paginate(
+            page=page, per_page=10)
+    next_url = url_for('messages', page=messages.next_num) \
+        if messages.has_next else None
+    prev_url = url_for('messages', page=messages.prev_num) \
+        if messages.has_prev else None
+    return render_template('messages.html', messages=messages.items,
+                           next_url=next_url, prev_url=prev_url)
             
 
 
