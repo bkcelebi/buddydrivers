@@ -99,7 +99,7 @@ class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    body = db.Column(db.String(140))
+    body = db.Column(db.String())
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
@@ -647,9 +647,7 @@ def send_message(id):
     if request.method == 'POST':
         sms = request.form['message']
 
-        if len(sms) > 140:
-            flash('Message is too long.', category='error')
-        elif len(sms) == 0:
+        if len(sms.strip()) == 0:
             flash('Message is empty.', category='error')
         else:
             msg = Message(author=current_user, recipient=user,
@@ -657,7 +655,7 @@ def send_message(id):
             db.session.add(msg)
             db.session.commit()
             flash('Your message has been sent.')
-            return redirect(url_for('send_message', id=id))
+            return redirect(url_for('drivers', id=id))
 
         return render_template('send_message.html', 
             user=user)
@@ -669,19 +667,40 @@ def send_message(id):
 @app.route('/messages')
 @login_required
 def messages():
+
     current_user.last_message_read_time = datetime.utcnow()
     db.session.commit()
+
     page = request.args.get('page', 1, type=int)
+
     messages = current_user.messages_received.order_by(
         Message.timestamp.desc()).paginate(
             page=page, per_page=10)
+
     next_url = url_for('messages', page=messages.next_num) \
         if messages.has_next else None
     prev_url = url_for('messages', page=messages.prev_num) \
         if messages.has_prev else None
+    
     return render_template('messages.html', messages=messages.items,
                            next_url=next_url, prev_url=prev_url)
             
+
+@app.route('/delete_message/<int:id>')
+@login_required
+def delete_message(id):
+    messages = Message.query.get_or_404(id)
+
+    if messages:
+        #3 rows of code below is from https://www.youtube.com/watch?v=Z1RJmh_OqeA
+        db.session.delete(messages)
+        db.session.commit()
+        flash('Message deleted', category='success')
+        return redirect(url_for('messages'))
+
+    else:
+        flash("Message not exist", category='error')
+        return redirect(url_for('messages'))
 
 
 if __name__ == "__main__":
