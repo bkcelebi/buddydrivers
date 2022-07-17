@@ -24,12 +24,12 @@
                         
             <div class="col-sm-12  col-lg-6 text-left">
                     
-                <div class="container">
+                
                     <br>
                     <h3 align="center">Update Ad</h3>
                     <br>
             
-                    <div class="d-flex justify-content-center">
+                    <div class="d-row justify-content-center">
                         <!-- form design is from bootstrap https://getbootstrap.com/docs/5.0/forms/overview/-->
                         <form action="/update-post/{{posts.id}}" method="POST" enctype="multipart/form-data">
                                 
@@ -94,7 +94,7 @@
             
                                 <div class="form-group col-md-4 mb-3">
                                     <label for="content">Content</label><br>
-                                    <textarea id="content" name="content" rows="5" cols="50">{{posts.content}}
+                                    <textarea id="content" name="content" rows="5" cols="34">{{posts.content}}
                                     </textarea><br>
                                 </div>
             
@@ -123,7 +123,7 @@
                         </form>
                     </div>
                     
-                </div><br>
+                <br>
                             
             </div>
 
