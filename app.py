@@ -655,7 +655,7 @@ def send_message(id):
             db.session.add(msg)
             db.session.commit()
             flash('Your message has been sent.')
-            return redirect(url_for('drivers', id=id))
+            return redirect(url_for('messages_sent', id=id))
 
         return render_template('send_message.html', 
             user=user)
@@ -683,6 +683,24 @@ def messages():
         if messages.has_prev else None
     
     return render_template('messages.html', messages=messages.items,
+                           next_url=next_url, prev_url=prev_url)
+                    
+@app.route('/messages_sent')
+@login_required
+def messages_sent():
+
+    page = request.args.get('page', 1, type=int)
+
+    messages = current_user.messages_sent.order_by(
+        Message.timestamp.desc()).paginate(
+            page=page, per_page=10)
+
+    next_url = url_for('messages', page=messages.next_num) \
+        if messages.has_next else None
+    prev_url = url_for('messages', page=messages.prev_num) \
+        if messages.has_prev else None
+    
+    return render_template('messages_sent.html', messages=messages.items,
                            next_url=next_url, prev_url=prev_url)
             
 

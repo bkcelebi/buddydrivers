@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Messages Sent</title>
+    {% if current_user.is_anonymous %}
+        <meta http-equiv="REFRESH" content="4; login">
+    {% endif %}
+
+{% endblock %}
+
+{% block body %}
+
+    {% if current_user.is_anonymous %}
+    
+        <div class="container text-center">
+            <br>
+            <div class="row justify-content-between">     
+                <div 
+                style="margin-top: 2%;
+                margin-left: -10%;" 
+                class="col-2 sidenav">
+                    <img src="../static/ads/default.jpeg" alt="ads">
+                </div>
+                            
+                <div class="col-sm-6  col-lg-6 text-left">
+                        
+                    <h3 align="center" style="margin-top: 10%;">You are being redirected to login!</h3>
+                    
+                </div>
+
+            <div 
+            style="margin-top: 2%;
+            margin-left: -10%;" 
+            class="col-2 sidenav">
+                <img src="../static/ads/default_3.jpeg" alt="ads">
+            </div>
+
+
+        </div>
+    
+    
+    {% else %}
+
+        {% if messages|length < 1 %}
+
+            <div class="container text-center">
+                <br>
+                <div class="row justify-content-between">     
+                    <div 
+                    style="
+                    margin-left: -10%;" 
+                    class="col-2 sidenav">
+                        <img src="../static/ads/default.jpeg" alt="ads">
+                    </div>
+                                
+                    <div class="col-sm-6  col-lg-6 text-left">
+                            
+                        <div class="container">
+        
+                            <br>
+                            <h3 align="center">Messages</h3>
+                            
+                            <div style="margin-top: 2%;" class=" d-flex justify-content-center align-items-center">
+
+                                <a style="margin-right: 2%;" class="btn btn-sm btn-outline-dark" href="messages">
+                                    Received
+                                </a>
+                                <a class="btn btn-sm btn-outline-dark active" href="messages_sent">
+                                    Sent
+                                </a>
+
+                            </div>
+
+                            <br>
+        
+                            <h5 style="margin-top: 5%;" align="center">There are no messages.</h5>     
+                            
+                            
+                        </div><br>
+                                    
+                    </div>
+                
+                <div 
+                style="
+                margin-right: -10%;" 
+                class="col-2 sidenav">
+                    <img src="../static/ads/default_3.jpeg" alt="ads">
+                </div>
+        
+        
+            </div>
+
+        {% else %}
+
+            <div class="container text-center">
+                <br>
+                <div class="row justify-content-between">     
+                    <div 
+                    style="
+                    margin-left: -10%;" 
+                    class="col-2 sidenav">
+                        <img src="../static/ads/default.jpeg" alt="ads">
+                    </div>
+                                
+                    <div class="col-sm-6  col-lg-6 text-left">
+                            
+                        <div class="container">
+        
+                            <br>
+                            <h3 align="center">Messages</h3>
+                            
+
+                            <div style="margin-top: 2%;" class=" d-flex justify-content-center align-items-center">
+
+                                <a style="margin-right: 2%;" class="btn btn-sm btn-outline-dark" href="messages">
+                                    Received
+                                </a>
+                                <a class="btn btn-sm btn-outline-dark active" href="messages_sent">
+                                    Sent
+                                </a>
+
+                            </div>
+
+                            <br>
+                            
+        
+                            <div class="flex-row ">
+        
+                                
+                                {% for post in messages %}
+            
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <td width="70px">
+                                                <a href="{{ url_for('profile', id=post.author.id) }}">
+                                                    <img src="{{url_for('static', filename='images/' + post.author.profile_pic)}}" style="width:40px; height:40px;" />
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {% set user_link %}
+                                                    <span class="user_popup">
+                                                        <a href="{{ url_for('profile', id=post.author.id) }}">
+                                                            {{ post.author.id }}
+                                                        </a>
+                                                    </span>
+                                                {% endset %}
+                                                <div class=" d-flex justify-content-between align-items-center">
+                                                    <span>
+                                                        <a href="{{ url_for('profile', id=post.author.id) }}">
+                                                            {{post.author.first_name}} 
+                                                        </a>
+                                                        to
+                                                        <a href="{{ url_for('profile', id=post.recipient.id) }}">
+                                                            {{post.recipient.first_name}} 
+                                                        </a>
+                                                </span>
+                                                    <span>{{(post.timestamp).day}}.{{(post.timestamp).month}}.{{(post.timestamp).year}}</span>
+        
+                                                </div>
+
+                                                <div class=" d-flex justify-content-between align-items-center">
+                                                    <span style="margin-right: 5%;" id="post{{ post.id }}">{{ post.body }}</span>
+
+                                                    <div class="flex-row">
+                                                        <a style="margin-top: 2%;" class="btn btn-sm btn-outline-success" href="{{ url_for('send_message',id=post.author.id) }}">
+                                                            <i class="bi bi-send"></i>
+                                                        </a>
+                                                        <a style="margin-top: 2%;" class="btn btn-sm btn-outline-danger" href="{{ url_for('delete_message',id=post.id) }}">
+                                                            <i class="bi bi-trash"></i>
+                                                        </a>
+                                                    </div>
+                                                    
+                                                </div>
+                                            
+                                                
+                                                
+                                            </td>
+                                        </tr>
+                                    </table>
+                                {% endfor %}
+                                <br>
+        
+                                <nav aria-label="...">
+                                    <ul class="pager">
+                                        <div class=" d-flex justify-content-between align-items-center">
+                                            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                                                <a href="{{ prev_url or '#' }}">
+                                                    <span aria-hidden="true">&larr;</span> Newer messages
+                                                </a>
+                                            </li>
+                                            <li class="next{% if not next_url %} disabled{% endif %}">
+                                                <a href="{{ next_url or '#' }}">
+                                                    Older messages <span aria-hidden="true">&rarr;</span>
+                                                </a>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </nav>
+                                            
+                            </div>
+                            
+                        </div><br>
+                                    
+                    </div>
+                
+                <div 
+                style="
+                margin-right: -10%;" 
+                class="col-2 sidenav">
+                    <img src="../static/ads/default_3.jpeg" alt="ads">
+                </div>
+        
+        
+            </div>
+
+        {% endif %}
+
+    
+
+    {% endif %}
+
+    </div>
+
+    <script>
+        console.log(moment())
+    </script>
+
+{% endblock %}
