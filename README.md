@@ -1,26 +1,3 @@
-# buddydrivers
-
-
-
-
-Final Report
-Word Count: 4100
-
-
-
-
-
-
-
-Burak Kamilcelebi – 10570456
-
-10570456@mydbs.ie
-Dr. Shazia A. Afzal
-
-08/08/2022
-					
-
-
 Abstract
 
 This report comprises the planning, design, and development of a web application, Buddydrivers, aimed at tackling and overcoming the hardships faced by learner drivers in Ireland who do not have adequate resources to practice outside of their mandatory EDT lesson hours. Through the use of Python, Flask, Bootstrap, SQLAlchemy, HTML, CSS and VSCode (IDE), an accessible platform on which learner drivers can search for and communicate with experienced drivers, who have created ads on the web app, based on their location and/or preferred language via a private messaging system.
