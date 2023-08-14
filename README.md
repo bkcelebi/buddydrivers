@@ -1,4 +1,17 @@
-Abstract
+## Tools Used
+
+<p align="left">
+  <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/git-colored.svg" width="32" height="32" /> 
+  <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/html5-colored.svg" width="32" height="32" /> 
+  <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/python-colored.svg" width="32" height="32" /> 
+  <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/css3-colored.svg" width="32" height="32" />
+  <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo-shadow.png" width="32" height="32" />
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI_avm-h8MEBXHu8CjIGr7mTduIgPQAt1prw&usqp=CAU" width="32" height="32" /> 
+</p>
+
+
+
+## Abstract
 
 This report comprises the planning, design, and development of a web application, Buddydrivers, aimed at tackling and overcoming the hardships faced by learner drivers in Ireland who do not have adequate resources to practice outside of their mandatory EDT lesson hours. Through the use of Python, Flask, Bootstrap, SQLAlchemy, HTML, CSS and VSCode (IDE), an accessible platform on which learner drivers can search for and communicate with experienced drivers, who have created ads on the web app, based on their location and/or preferred language via a private messaging system.
 Keywords: learner driver, experienced driver, sponsor driver, Python, Flask, Bootstrap, SQLAlchemy, HTML, CSS.
